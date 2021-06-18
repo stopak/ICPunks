@@ -1,0 +1,76 @@
+
+import Word32 "mo:base/Word32";
+import Nat32 "mo:base/Nat32";
+import HashMap "mo:base/HashMap";
+import Hash "mo:base/Hash";
+import AssocList "mo:base/AssocList";
+import Iter "mo:base/Iter";
+import Array "mo:base/Array";
+import Option "mo:base/Option";
+
+import Identity "mo:base/Identity";
+
+import Types "./types";
+
+actor class ERC721(_name: Text, _symbol: Text, _owner: Principal) {
+    private stable var owner_ : Principal = _owner;
+    private stable let name_ : Text = _name;
+    private stable let symbol_ : Text = _symbol;
+
+    private var owners = HashMap.HashMap<Principal, [Nat]>(100, isEq, hashNat);
+    private var tokens = HashMap.HashMap<Nat, Principal>(100, isEq, hashNat);
+
+
+// balanceOf(owner)
+
+// ownerOf(tokenId)
+
+// safeTransferFrom(from, to, tokenId)
+
+    /// Transfers token from one account (from) to another (to), 
+    /// Requirements: (from) is the owner of token, (to) is valid address, the calling principal must match (from) or be approved to move tokens
+    public shared({ caller }) func transferFrom(from: Principal, to: Principal, tokenId: Nat) : async Bool {
+        switch (tokens.get(tokenId)) {
+            case (?owner) {
+                assert(owner != from);
+
+                tokens.put(tokenId, to);
+
+                return true;
+            };
+            case (_) {
+                return false;
+            };
+        }
+    }
+
+// approve(to, tokenId)
+
+// getApproved(tokenId)
+
+// setApprovalForAll(operator, _approved)
+
+// isApprovedForAll(owner, operator)
+
+// safeTransferFrom(from, to, tokenId, data)
+
+
+    public query func totalSupply() : async Nat {
+        return totalSupply_;
+    };
+
+    public query func owner() : async Principal {
+        return owner_;
+    };
+
+//ERC721 Metadata
+
+    public query func name() : async Text {
+        return name_;
+    };
+
+    public query func symbol() : async Text {
+        return symbol_;
+    };
+
+}

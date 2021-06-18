@@ -1,7 +1,7 @@
 {
   "canisters": {
     "icpunks": {
-      "main": "src/icpunks/main.mo",
+      "main": "service/main.mo",
       "type": "motoko"
     },
     "icpunks_assets": {
@@ -9,18 +9,24 @@
         "icpunks"
       ],
       "frontend": {
-        "entrypoint": "src/icpunks_assets/src/index.html"
+        "entrypoint": "src/index.tsx"
       },
       "source": [
-        "src/icpunks_assets/assets",
-        "dist/icpunks_assets/"
+        "build",
+        "public"
       ],
       "type": "assets"
     }
   },
   "defaults": {
     "build": {
-      "packtool": ""
+      "packtool": "vessel sources",
+      "output": "build"
+    },
+    "start": {
+      "address": "127.0.0.1",
+      "port": 8000,
+      "serve_root": "build"
     }
   },
   "dfx": "0.7.1",
