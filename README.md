@@ -65,6 +65,7 @@ Clone and setup [the project](https://github.com/dfinity/internet-identity) and 
 
 # To Consider
 Wallet Cannister that can display NFTs and "ERC20" tokens
+
 How to efficiently store 1000 images, (propably one large image) tried to make canister with 100 images, build takes forever
 
 
@@ -79,7 +80,10 @@ Current canisters have limit on ammount of data of 4gb. If we reach more data th
 
 ## Inter-Canister Calls (Required for marketplaces, DeFI and others)
 
-### Identity of Inter-Canister Calls (whos is the actual sender, can we check that call was made by canister instead of user, what identity is used by calling canister)
-### What happens when inter-canister call fails
-### How to prevent canister updates (we are keeping users value, it must be protected)
-### How to ensure atomicity of transaction that span multiple cannisters 
+Identity of Inter-Canister Calls (whos is the actual sender, can we check that call was made by canister instead of user, what identity is used by calling canister)
+
+What happens when inter-canister call fails
+
+How to prevent canister updates (we are keeping users value, it must be protected)
+
+How to ensure atomicity of transaction that span multiple cannisters 
