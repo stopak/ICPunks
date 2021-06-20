@@ -7,7 +7,7 @@ import List "mo:base/List";
 import Option "mo:base/Option";
 import Principal "mo:base/Principal";
 
-actor ICPunk {
+actor class ICPunk () {
     // private stable var owner_ : Principal = _owner;
     private stable let name_ : Text = "ICPunk";
     private stable let symbol_ : Text = "ICPunk";
@@ -19,9 +19,20 @@ actor ICPunk {
     private var tokens_ = HashMap.HashMap<Nat, Principal>(totalSupply_, isEq,  Nat32.fromNat);
     // private var tokes = Array.init(1, Principal.fromText("aaaaaa-aaaa"));
     // private var tokens = HashMap.HashMap<Nat, Principal>(100, isEq, hashNat);
+    // private var tokenArray_ : [var Principal] = Array.init<Principal>(totalSupply_, Principal.fromText("0"));
 
     public query func countClaimedTokens() : async Nat {
         tokens_.size()
+    };
+
+    public query func listTokens() : async [?Principal] {
+        let items : [var ?Principal] = Array.init<?Principal>(totalSupply_, null);
+
+        for ((id, owner) in tokens_.entries()) {
+            items[id] := ?owner;
+        };
+
+        Array.freeze<?Principal>(items);
     };
 
     // public query func getPunks() : async [Punk] {

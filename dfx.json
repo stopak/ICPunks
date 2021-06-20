@@ -1,7 +1,7 @@
 {
   "canisters": {
     "icpunks": {
-      "main": "service/main.mo",
+      "main": "service/ICPunks.mo",
       "type": "motoko"
     },
     "icpunks_assets": {
@@ -29,7 +29,7 @@
       "serve_root": "build"
     }
   },
-  "dfx": "0.7.1",
+  "dfx": "0.7.2",
   "networks": {
     "local": {
       "bind": "127.0.0.1:8000",

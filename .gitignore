@@ -9,7 +9,10 @@
 
 # dfx temporary files
 .dfx/
+.husky/
+.vessel/
 
 # frontend code
 node_modules/
 dist/
+build/

@@ -10,6 +10,8 @@ const overrideWebpackConfig = ({ webpackConfig }) => {
       !Object.keys(plugin).includes("appSrcs")
   );
 
+  console.log(aliases);
+
   return webpackConfig;
 };
 
