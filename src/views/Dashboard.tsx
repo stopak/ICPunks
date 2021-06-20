@@ -1,8 +1,9 @@
 import { Principal } from "@dfinity/agent";
 import { Component } from "react";
 import { listTokens } from "../utils/canister";
+import TokenCard from "../components/TokenCard";
 
-
+import { Container, Col, Row } from "react-bootstrap";
 interface DashboardProps {
 
 }
@@ -21,11 +22,19 @@ export class Dashboard extends Component<DashboardProps, DashboardState> {
     }
 
     render() {
-        if (this.state !== null && this.state.tokens !== null) {
-            return (<>Fetched {this.state.tokens.length} tokens!</>);
-        } else 
+        if (this.state === null || this.state.tokens === null) {
+            return (<>Loading ...</>);
+        }
+
         return (
-            <>Loading tokens</>
+            <Container fluid>
+                <Row>
+                    {this.state.tokens.map((value, index) =>
+                        <Col key={index} xl="3" lg="4" md="6" sm="12">
+                            <TokenCard value={value} index={index} />
+                        </Col>
+                    )}</Row>
+            </Container>
         );
     }
 }

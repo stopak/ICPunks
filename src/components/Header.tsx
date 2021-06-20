@@ -1,28 +1,18 @@
-import { useAuth } from "src/utils";
+import { Navbar, Nav } from "react-bootstrap";
+import Account from "./Account";
 
 export default function Header() {
-    const authContext = useAuth();
-
-    async function signIn() {
-        authContext.logIn();
-    }
-
-    function signOut() {
-        authContext.logOut();
-    }
-
-    if (authContext.isAuthenticated) {
-        let principal = authContext.identity?.getPrincipal();
-        let hex = principal?.toString();
-
-
-        return (
-            <>Authorized! {hex} <button onClick={signOut}>Logout</button></>
-        );
-    }
-
-
     return (
-        <>Not authorized! <button onClick={signIn}>Login</button></>
+        <Navbar bg="light" expand="lg">
+            <Navbar.Brand href="#home">ICPunks</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="mr-auto">
+                    <Nav.Link href="/">Punks</Nav.Link>
+                    <Nav.Link href="/about">About</Nav.Link>
+                </Nav>
+                <Account/>
+            </Navbar.Collapse>
+        </Navbar>
     );
 }

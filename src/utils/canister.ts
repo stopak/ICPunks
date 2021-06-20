@@ -22,6 +22,13 @@ export async function listTokens() : Promise<Principal[]> {
   return tokens;
 }
 
+export async function claimToken(tokenId: number) : Promise<boolean> {
+  var actor = await ICPunks.actor;
+  var result = await actor.claim(BigInt(tokenId));
+
+  return result;
+}
+
 // export function getUserFromStorage(
 //   storage = window.localStorage,
 //   key: string

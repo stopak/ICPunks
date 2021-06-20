@@ -14,9 +14,11 @@ actor class ICPunk () {
     private stable let totalSupply_ : Nat = 1000;
 
     func isEq(x: Nat, y: Nat): Bool { x == y };
+    func isEqP(x: Principal, y: Principal): Bool { x == y };
 
     // private var owners = HashMap.HashMap<Principal, List<Nat>>(1, isEq, Principal.hash);
     private var tokens_ = HashMap.HashMap<Nat, Principal>(totalSupply_, isEq,  Nat32.fromNat);
+    private var owners_ = HashMap.HashMap<Principal, Nat>(totalSupply_, isEqP,  Principal.hash);
     // private var tokes = Array.init(1, Principal.fromText("aaaaaa-aaaa"));
     // private var tokens = HashMap.HashMap<Nat, Principal>(100, isEq, hashNat);
     // private var tokenArray_ : [var Principal] = Array.init<Principal>(totalSupply_, Principal.fromText("0"));
@@ -71,7 +73,22 @@ actor class ICPunk () {
             };
             //The token is not claimed, claim it!
             case (_) {
-                tokens_.put(tokenId, msg.caller);
+
+                var ownedToken = owners_.get(msg.caller);
+
+                switch (ownedToken) {
+                    //Sender already claimed token before!, only one token per person
+                    case (?token) {
+                        return false;
+                    };
+                    case (_) {
+                        tokens_.put(tokenId, msg.caller);
+                        owners_.put(msg.caller, tokenId);
+
+                        return true;
+                    };
+                };
+
                 return false;
             };
         };

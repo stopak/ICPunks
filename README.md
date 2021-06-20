@@ -1,23 +1,66 @@
-# icpunks
+# ICPunks
 
-Welcome to your new icpunks project and to the internet computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
+> ICPunks on DFinity Chain
 
-To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
+## Installation
 
-To learn more before you start working with icpunks, see the following documentation available online:
+### Prerequisites
 
-- [Quick Start](https://sdk.dfinity.org/docs/quickstart/quickstart-intro.html)
-- [SDK Developer Tools](https://sdk.dfinity.org/docs/developers-guide/sdk-guide.html)
-- [Motoko Programming Language Guide](https://sdk.dfinity.org/docs/language-guide/motoko.html)
-- [Motoko Language Quick Reference](https://sdk.dfinity.org/docs/language-guide/language-manual.html)
+- [Internet Computer SDK](https://sdk.dfinity.org)
+- [Node.js](https://nodejs.org)
+- [Python](https://www.python.org)
+- [Vessel@0.6.0](https://github.com/dfinity/vessel/releases/tag/v0.6.0)
 
-If you want to start working on your project right away, you might want to try the following commands:
+If you don't have vessel yet you can install it by running an install script included in the project:
 
-```bash
-cd icpunks/
-dfx help
-dfx config --help
+```shell
+$ ./scripts/vessel-install.sh
 ```
+MacOS might ask if you're sure you trust this package. You can safely accept
+
+Double-check you have [vessel](https://github.com/dfinity/vessel) installed at version 0.6.*, then clone this repository and navigate to the `cancan` directory.
+
+
+```shell
+$ vessel --version
+# vessel 0.6.0
+
+$ git clone git@github.com:stopak/ICPunks.git
+$ cd ICPunks
+```
+
+Start a local Internet Computer replica.
+
+```shell
+$ dfx start
+```
+
+Execute the following commands in another terminal tab in the same directory.
+
+```shell
+$ yarn # <- This installs packages from the lockfile for consistency
+
+$ ./bootstrap.sh
+```
+
+This will deploy a local canister called `icpunks_ui`. To open the front-end, get the asset canister id by running `dfx canister id icpunks_ui`. Then open your browser, and navigate to `http://<icpunks_ui-canister-id>.localhost:8000/sign-in`.
+
+## Frontend Development
+
+To run a development server with fast refreshing and hot-reloading, you can use this command in the app's root directory:
+
+```shell
+$ yarn run start
+```
+
+Your default browser will open (or focus) a tab at `localhost:3000`.
+
+Now you can make changes to any frontend code and see instant updates, in many cases not even requiring a page refresh, so UI state is preserved between changes. Occasionally adding a CSS rule won't trigger an update, and the user has to manually refresh to see those changes.
+
+## Internet Identity Locally
+
+Clone and setup [the project](https://github.com/dfinity/internet-identity) and make sure that `internet_identity` is deployed, and you have the front-end available. That should allow you to do auth locally to try out the new Internet Identity service. For production, we will probably configure `identity.ic0.app` to be running this canister, but for now this is how to get it running.
+
 
 
 # To Consider
