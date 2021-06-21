@@ -93,10 +93,12 @@ How to handle growing costs of containers upkeep. We need to pay not only for ex
 ### How to deal with long transaction history
 Current canisters have limit on amount of data of 4gb. If we reach more data than that (ETH currently is about 300GB) we need to spawn new containers which incurs additional running costs
 
-## Inter-Canister Calls (Required for marketplaces, DeFI and others)
+### Inter-Canister Calls (required for marketplaces, DeFI and others)
 
-### Identity of Inter-Canister Calls (whos is the actual sender, can we check that call was made by canister instead of user, what identity is used by calling canister)
-### What happens when inter-canister call fails?
-### How to prevent canister updates (we are keeping users value, it must be protected)
-### How to ensure atomicity of transaction that span multiple canisters 
+The following issues are related to calls between different canisters, and we leave them here as open questions:
+
+- Identity of Inter-Canister Calls: who is the actual sender, can we check that call was made by canister instead of user, what identity is used by calling canister?
+- What happens when inter-canister call fails?
+- How to prevent canister updates (we are keeping users' data, so it must be protected)?
+- How to ensure atomicity of transaction that span multiple canisters? 
 
