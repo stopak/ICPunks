@@ -9,7 +9,7 @@ interface DashboardProps {
 }
 
 interface DashboardState {
-    tokens: Principal[];
+    tokens: ([] | Principal)[];
 }
 
 export class Dashboard extends Component<DashboardProps, DashboardState> {

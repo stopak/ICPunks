@@ -59,6 +59,25 @@ actor class ICPunk () {
         items
     };
 
+    ///Returns owner of given token
+    public query func ownerOf(tokenId: Nat) : async ?Principal {
+        assert(tokenId < totalSupply_);
+        assert(tokenId >= 0);
+
+        var currentOwner = tokens_.get(tokenId);
+
+        switch (currentOwner) {
+            //Token was already claimed, return false
+            case (?owner) {
+                return ?owner;
+            };
+
+            case (_) {
+                return null;
+            }
+        };
+    };
+
     ///Used to claim tokens, this should be made obsolete, 
     public shared(msg) func claim(tokenId: Nat) : async Bool {
         assert(tokenId < totalSupply_);

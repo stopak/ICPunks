@@ -15,9 +15,9 @@ const ICPunks = actorController;
 
 export type Optional<Type> = [Type] | [];
 
-export async function listTokens() : Promise<Principal[]> {
+export async function listTokens() : Promise<([] | Principal)[]> {
   var actor = await ICPunks.actor;
-  var tokens = await actor.listTokens();
+  var tokens = await actor.listTokens() as ([] | Principal)[];
 
   return tokens;
 }
