@@ -11,22 +11,33 @@
 - [Python](https://www.python.org)
 - [Vessel@0.6.0](https://github.com/dfinity/vessel/releases/tag/v0.6.0)
 
-If you don't have vessel yet you can install it by running an install script included in the project:
+## Setup
 
 ```shell
-$ ./scripts/vessel-install.sh
-```
-MacOS might ask if you're sure you trust this package. You can safely accept
-
-Double-check you have [vessel](https://github.com/dfinity/vessel) installed at version 0.6.*, then clone this repository and navigate to the `cancan` directory.
-
-
-```shell
-$ vessel --version
-# vessel 0.6.0
 
 $ git clone git@github.com:stopak/ICPunks.git
 $ cd ICPunks
+
+```
+
+If you don't have vessel yet you can install it by running an install script included in the project:
+
+MacOS might ask if you're sure you trust this package. You can safely accept
+
+```shell
+
+# Install vessel
+$ ./scripts/vessel-install.sh
+
+```
+
+Double-check you have [vessel](https://github.com/dfinity/vessel) installed at version 0.6.*, then clone this repository and navigate to the `ICPunks` directory
+
+```shell
+
+$ vessel --version
+# vessel 0.6.0
+
 ```
 
 Start a local Internet Computer replica.
@@ -61,7 +72,7 @@ Now you can make changes to any frontend code and see instant updates, in many c
 
 Clone and setup [the project](https://github.com/dfinity/internet-identity) and make sure that `internet_identity` is deployed, and you have the front-end available. That should allow you to do auth locally to try out the new Internet Identity service. For production, we will probably configure `identity.ic0.app` to be running this canister, but for now this is how to get it running.
 
-
+In order to install II start replica in ICPunks, then go to II project, build it and deploy.
 
 # To Consider
 Wallet Cannister that can display NFTs and "ERC20" tokens
