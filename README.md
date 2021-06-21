@@ -1,18 +1,20 @@
 # ICPunks
 
-> ICPunks on DFinity Chain
+ICPunks is a project to bring an analogue ERC-721 to Dfinity in order to faciliate creation of NFTs. 
 
 ## Installation
 
 ### Prerequisites
 
 - [Internet Computer SDK](https://sdk.dfinity.org)
-- [Node.js](https://nodejs.org)
+- [Node.js](https://nodejs.org) - version >=12
 - [Yarn](https://nodejs.org)
 - [Python](https://www.python.org)
 - [Vessel@0.6.0](https://github.com/dfinity/vessel/releases/tag/v0.6.0)
 
 ## Setup
+
+To compile the project, start by downloading the repository:
 
 ```shell
 
@@ -22,8 +24,6 @@ $ cd ICPunks
 ```
 
 If you don't have vessel yet you can install it by running an install script included in the project:
-
-MacOS might ask if you're sure you trust this package. You can safely accept
 
 ```shell
 
