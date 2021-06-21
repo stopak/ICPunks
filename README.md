@@ -6,6 +6,8 @@ In the current version 0.0.1, you’ll be able to compile the local copy of ICPu
 
 This project is sponsored by the Dfinity Developer Grant Programme. 
 
+![Screen after successful deployment, v.0.0.1](https://user-images.githubusercontent.com/22591201/122807088-6e8f2100-d2cb-11eb-8518-5eb236d27c83.png)
+
 ## Installation
 
 ### Prerequisites
@@ -119,6 +121,8 @@ Now deploy ICPunks canisters
 cd ../icpunks
 dfx deploy
 ```
+![Internet identity on local replica](https://user-images.githubusercontent.com/22591201/122807202-9088a380-d2cb-11eb-81f0-d1f91d2d103e.png)
+
 
 # Issues and Remarks
 Here, we gathered various problems we expect to solve while working on the next versions of the ICPunks. Feel free to let us know what you think!
