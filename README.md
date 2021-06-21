@@ -1,18 +1,24 @@
 # ICPunks
 
-> ICPunks on DFinity Chain
+ICPunks is a project to bring an analogue ERC-721 to Dfinity in order to faciliate creation of NFTs. This repository introduces NFT canisters by showing an implementation - ICPunks - a collection of 10,000 Dfinity punks, which will be available for free to claim by community.
+
+In the current version 0.0.1, you’ll be able to compile the local copy of ICPunks together with Dfinity network and frontend running locally. Follow setup instructions below to run it.
+
+This project is sponsored by the Dfinity Developer Grant Programme. 
 
 ## Installation
 
 ### Prerequisites
 
 - [Internet Computer SDK](https://sdk.dfinity.org)
-- [Node.js](https://nodejs.org)
+- [Node.js](https://nodejs.org), version >= 12
 - [Yarn](https://nodejs.org)
 - [Python](https://www.python.org)
 - [Vessel@0.6.0](https://github.com/dfinity/vessel/releases/tag/v0.6.0)
 
 ## Setup
+
+The first step to setup ICPunks locally is to clone this git repository:
 
 ```shell
 
@@ -21,9 +27,7 @@ $ cd ICPunks
 
 ```
 
-If you don't have vessel yet you can install it by running an install script included in the project:
-
-MacOS might ask if you're sure you trust this package. You can safely accept
+If you don't have vessel yet you can install it by running an install script included in this project:
 
 ```shell
 
@@ -116,27 +120,26 @@ cd ../icpunks
 dfx deploy
 ```
 
-# To Consider
-Wallet Cannister that can display NFTs and "ERC20" tokens
+# Issues and Remarks
+Here, we gathered various problems we expect to solve while working on the next versions of the ICPunks. Feel free to let us know what you think!
 
-How to efficiently store 1000 images, (propably one large image) tried to make canister with 100 images, build takes forever
+In short:
 
-
-## Tokenomics
-In the long run, how to pay for cycles required to upkeep token.
+- Wallet Canister that can display NFTs and "ERC20" tokens: how to efficiently store 1000 images, (propably one large image) tried to make canister with 100 images, build takes forever
+- In the long run, how we/users should pay for cycles required to upkeep token.
 
 ## Upkeep, Transaction History
 How to handle growing costs of containers upkeep. We need to pay not only for execution but also for data storage, which will increase overtime. If not handled properly it will couse the whole token to be not sustainable in the long run.
 
 ### How to deal with long transaction history
-Current canisters have limit on ammount of data of 4gb. If we reach more data than that (ETH currently is about 300GB) we need to spawn new containers which incurrs additional running costs
+Current canisters have limit on amount of data of 4gb. If we reach more data than that (ETH currently is about 300GB) we need to spawn new containers which incurs additional running costs
 
-## Inter-Canister Calls (Required for marketplaces, DeFI and others)
+### Inter-Canister Calls (required for marketplaces, DeFI and others)
 
-Identity of Inter-Canister Calls (whos is the actual sender, can we check that call was made by canister instead of user, what identity is used by calling canister)
+The following issues are related to calls between different canisters, and we leave them here as open questions:
 
-What happens when inter-canister call fails
+- Identity of Inter-Canister Calls: who is the actual sender, can we check that call was made by canister instead of user, what identity is used by calling canister?
+- What happens when inter-canister call fails?
+- How to prevent canister updates (we are keeping users' data, so it must be protected)?
+- How to ensure atomicity of transaction that span multiple canisters? 
 
-How to prevent canister updates (we are keeping users value, it must be protected)
-
-How to ensure atomicity of transaction that span multiple cannisters 
