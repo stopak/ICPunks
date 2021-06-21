@@ -13,4 +13,4 @@ elif [[ "$OSTYPE" == "win32" ]]; then
 fi
 
 VESSEL_VERSION=v0.6.0
-wget --output-document $BIN https://github.com/dfinity/vessel/releases/download/$VESSEL_VERSION/vessel-$OS_FILENAME && chmod +x $BIN && $BIN help
+curl -o $BIN https://github.com/dfinity/vessel/releases/download/$VESSEL_VERSION/vessel-$OS_FILENAME && chmod +x $BIN && $BIN help

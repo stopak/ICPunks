@@ -41,21 +41,25 @@ $ vessel --version
 
 ```
 
+Install all dependencies for UI
+
+```shell
+yarn # <- This installs packages from the lockfile for consistency
+```
+
 Start a local Internet Computer replica.
 
 ```shell
-$ dfx start
+$ dfx start --clean --background
 ```
 
-Execute the following commands in another terminal tab in the same directory.
+Execute the following commands in another terminal tab in the same directory. (If you want to use internet-identity, skip this instruction and go to How to install local identity)
 
 ```shell
-$ yarn # <- This installs packages from the lockfile for consistency
-
-$ ./bootstrap.sh
+$ dfx deploy
 ```
 
-This will deploy a local canister called `icpunks_ui`. To open the front-end, get the asset canister id by running `dfx canister id icpunks_ui`. Then open your browser, and navigate to `http://<icpunks_ui-canister-id>.localhost:8000/sign-in`.
+This will deploy a local canister called `icpunks_ui`. To open the front-end, get the asset canister id by running `dfx canister id icpunks_assets`. Then open your browser, and navigate to `http://<icpunks_assets-canister-id>.localhost:8000`.
 
 ## Frontend Development
 
@@ -74,6 +78,43 @@ Now you can make changes to any frontend code and see instant updates, in many c
 Clone and setup [the project](https://github.com/dfinity/internet-identity) and make sure that `internet_identity` is deployed, and you have the front-end available. That should allow you to do auth locally to try out the new Internet Identity service. For production, we will probably configure `identity.ic0.app` to be running this canister, but for now this is how to get it running.
 
 In order to install II start replica in ICPunks, then go to II project, build it and deploy.
+
+### How to install local identity
+in ICPunks clean local replica
+
+```shell
+dfx stop
+dfx start --clean --background
+
+cd ..
+git clone https://github.com/dfinity/internet-identity.git
+cd internet-identity
+```
+
+Replica data in internet-identity cloned repo must also be cleaned (otherwise there will be errors during deployment). Replace $internet_identity with your local path to cloned repo
+
+```shell
+rm -r .dfx/local
+```
+
+Deploy internet-identity canister to ICPunks replica
+
+```shell
+II_ENV=development dfx deploy --no-wallet --argument '(null)'
+```
+
+Copy canister_ids.json from internet-identity replica to ICPunks replica
+
+```shell
+cp ./.dfx/local/canister_ids.json ../icpunks/.dfx/local/canister_ids.json
+```
+
+Now deploy ICPunks canisters
+
+```shell
+cd ../icpunks
+dfx deploy
+```
 
 # To Consider
 Wallet Cannister that can display NFTs and "ERC20" tokens
