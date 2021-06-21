@@ -7,7 +7,8 @@ import { claimToken } from "../utils/canister";
 
 export default function TokenCard({ value, index }: { value: Principal, index: number }) {
     const [ownerText, setOwnerText] = useState("");
-    const [claimText, setClaimText] = useState("Claim!");
+    const [claimText, setClaimText] = useState(<Button variant="primary" onClick={claimTokenButton}>Claim!</Button>);
+    const [isWorking, setWorking] = useState(false);
     const authContext = useAuth();
 
     let imgSrc = "punks/cat" + (index+1) + ".png";
@@ -20,22 +21,27 @@ export default function TokenCard({ value, index }: { value: Principal, index: n
 
         if (authContext.isAuthenticated && authContext.identity?.getPrincipal().toString() === value.toString()) {
             setOwnerText("Your token!");
+            setClaimText(<></>);
         }
 
     }, [value, authContext.isAuthenticated]);
 
     async function claimTokenButton() {
         if (!authContext.isAuthenticated) return;
-        if (claimText !== "Claim!") return;
+        if (isWorking) return;
 
-        setClaimText("Claiming ...");
+        setWorking(true);
+
+        setClaimText(<>Claiming ...</>);
         
         var result = await claimToken(index);
 
         if (result)
-            setClaimText("Claimed!");
+            setClaimText(<>Claimed!</>);
         else
-            setClaimText("Error during claiming");
+            setClaimText(<>Error during claiming</>);
+
+        setWorking(false);
     }
 
     return (
@@ -46,7 +52,7 @@ export default function TokenCard({ value, index }: { value: Principal, index: n
                 <Card.Text>
                     {ownerText}
                 </Card.Text>
-                <Button variant="primary" onClick={claimTokenButton}>{claimText}</Button>
+                {claimText}
             </Card.Body>
         </Card>
     );

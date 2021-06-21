@@ -61,8 +61,8 @@ actor class ICPunk () {
 
     ///Used to claim tokens, this should be made obsolete, 
     public shared(msg) func claim(tokenId: Nat) : async Bool {
-        assert(tokenId <= totalSupply_);
-        assert(tokenId > 0);
+        assert(tokenId < totalSupply_);
+        assert(tokenId >= 0);
 
         var currentOwner = tokens_.get(tokenId);
 
@@ -96,8 +96,8 @@ actor class ICPunk () {
 
     ///Invokes transfer of token from one principal to the other, only the owner of the token can call this action
     public shared(msg) func transferFrom(to: Principal, tokenId: Nat) : async Bool {
-        assert(tokenId <= totalSupply_);
-        assert(tokenId > 0);
+        assert(tokenId < totalSupply_);
+        assert(tokenId >= 0);
 
         var currentOwner = tokens_.get(tokenId);
 
