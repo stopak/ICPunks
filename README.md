@@ -8,6 +8,7 @@
 
 - [Internet Computer SDK](https://sdk.dfinity.org)
 - [Node.js](https://nodejs.org)
+- [Yarn](https://nodejs.org)
 - [Python](https://www.python.org)
 - [Vessel@0.6.0](https://github.com/dfinity/vessel/releases/tag/v0.6.0)
 
