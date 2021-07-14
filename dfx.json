@@ -1,7 +1,11 @@
 {
   "canisters": {
     "icpunks": {
-      "main": "service/ICPunks.mo",
+      "main": "service/icpunks.mo",
+      "type": "motoko"
+    },
+    "icpunks_storage": {
+      "main": "service/storage.mo",
       "type": "motoko"
     },
     "icpunks_assets": {
@@ -12,8 +16,13 @@
         "entrypoint": "src/index.tsx"
       },
       "source": [
-        "build",
-        "public"
+        "build"
+      ],
+      "type": "assets"
+    },
+    "icpunks_punks": {
+      "source": [
+        "punks"
       ],
       "type": "assets"
     }

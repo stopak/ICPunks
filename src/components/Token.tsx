@@ -53,6 +53,21 @@ export default function Token(props: any) {
 
     let url = "/token/"+tokenId;
 
+    if (authContext.isAuthenticated) {
+        return (
+            <Card style={{ width: '18rem', margin: '20px' }}>
+            <Card.Img variant="top" src={imgSrc} />
+            <Card.Body>
+                <Card.Title>Punk {tokenId}</Card.Title>
+                <Card.Text>
+                    {ownerText}
+                </Card.Text>
+                <Button variant="primary" onClick={claimTokenButton}>Claim!</Button>
+            </Card.Body>
+        </Card>
+        );
+    }
+
     return (
         <Card style={{ width: '18rem', margin: '20px' }}>
             <Card.Img variant="top" src={imgSrc} />

@@ -8,6 +8,14 @@ This project is sponsored by the Dfinity Developer Grant Programme.
 
 ![Screen after successful deployment, v.0.0.1](https://user-images.githubusercontent.com/22591201/122807088-6e8f2100-d2cb-11eb-8518-5eb236d27c83.png)
 
+## ToDo
+
+Ledger Storage
+Accepting Cycles as form of payment for ICPunk
+
+UI
+View of owned ICPunks
+
 ## Installation
 
 ### Prerequisites
