@@ -24,5 +24,8 @@ export default function Account() {
         );
     }
 
-    return (<Button variant="outline-success" onClick={signIn}>Login</Button>);
+    return (<div>
+        <Button variant="outline-success" onClick={signIn}>Connect wallet</Button>
+       <img src="/img/wallet.png" alt="wallet"/>
+        </div>);
 }

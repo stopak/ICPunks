@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { updateHead, ProvideAuth } from "./utils";
 import { AppRouter } from "./AppRouter";
 import Header from "./components/Header";
-// import "./styles.scss";
+import "./styles.scss";
 
 function ICPunksApp() {
   return (

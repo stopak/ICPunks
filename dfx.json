@@ -19,12 +19,6 @@
         "build"
       ],
       "type": "assets"
-    },
-    "icpunks_punks": {
-      "source": [
-        "punks"
-      ],
-      "type": "assets"
     }
   },
   "defaults": {

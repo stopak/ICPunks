@@ -1,0 +1,149 @@
+$main-color: rgba(255,1,2,1);
+$main-dark: rgba(161,6,6,1);
+
+$sec-color: rgba(53,172,240,1);
+$sec-dark: rgba(20,135,202,1);
+
+body {
+    font-family: Segoe UI;
+    font-size: 22px;
+}
+
+h1, h2 {
+    font-weight: bold;
+}
+
+.main-color {
+    color: $main-color;
+}
+
+.main-background {
+    color: white;
+    text-align: center;
+    background-color: $main-color;
+}
+.dark-background {
+    background-color: $main-dark;
+}
+
+.sec-background {
+    color: white;
+    text-align: center;
+    background-color: $sec-color;
+    height: 67px;
+    p {
+        font-weight: bold;
+        font-size: 26px;
+        padding-top: 12px;
+    }
+}
+.sdark-background {
+    background-color: $sec-dark;
+    height: 73px;
+}
+
+.title {
+    font-size:132px;
+    color: $main-color;
+}
+
+.topmenu {
+    filter: drop-shadow(0px 3px 30px rgba(0, 0, 0, 0.22));
+    width: 100%;
+}
+
+.button {
+    filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.161));
+    border-radius: 10px;
+    border: 0px;
+    border-color: $main-dark;
+    border-style: solid;
+}
+
+.button-wrapper {
+    border-radius: 10px;
+}
+
+.counter {
+    p {
+        font-weight: bold;
+        margin-top: .25rem!important;
+    }
+
+    .button {
+        height: 106px;
+    }
+
+    .button-wrapper {
+        height: 112px;
+    }
+
+    .button, .button-wrapper {
+        width: 106px;
+    }
+}
+
+.timer {
+    font-size: 56px;
+    font-weight: bold;
+    filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.761));
+    padding-top: 10px;
+}
+
+
+#Mask_Group_11 {
+    position: absolute;
+    width: 551.285px;
+    height: 432.781px;
+    left: -170.285px;
+    top: 351.068px;
+    overflow: visible;
+}
+#Mask_Group_37 {
+    position: absolute;
+    width: 388.533px;
+    height: 456.014px;
+    left: -71px;
+    top: 30px;
+    overflow: visible;
+}
+#Clown1 {
+    position: absolute;
+    width: 956px;
+    height: 956px;
+    left: 792px;
+    top: 30px;
+    overflow: visible;
+}
+#Mask_Group_10 {
+    position: absolute;
+    width: 378.267px;
+    height: 209.637px;
+    left: -52.563px;
+    top: 734.864px;
+    overflow: visible;
+}
+#Mask_Group_9 {
+    position: absolute;
+    width: 405.863px;
+    height: 342.186px;
+    left: 1571.755px;
+    top: 164.907px;
+    overflow: visible;
+}
+#Mask_Group_5 {
+    position: absolute;
+    width: 594.517px;
+    height: 551.512px;
+    left: 1554.83px;
+    top: 518.564px;
+    overflow: visible;
+}
+#Mask_Group_4 {
+    position: absolute;
+    width: 532.176px;
+    height: 502.677px;
+    left: 1482px;
+    top: 610.735px;
+    overflow: visible;
+}

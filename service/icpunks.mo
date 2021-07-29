@@ -1,6 +1,7 @@
 import HashMap "mo:base/HashMap";
 import Hash "mo:base/Hash";
 import Nat32 "mo:base/Nat32";
+import Buffer "mo:base/Buffer";
 import Nat "mo:base/Nat";
 import Iter "mo:base/Iter";
 import Array "mo:base/Array";
@@ -38,7 +39,7 @@ actor class ICPunk (_name: Text, _symbol: Text, _totalSupply: Nat, _owner: Princ
 
 
     private stable var remainingTokensCount_ : Nat = 0;
-    private stable var remainingTokens_ : [var Nat] = [var];
+    private stable var remainingTokens_ : [Nat] = [];
 
     // private var tokes = Array.init(1, Principal.fromText("aaaaaa-aaaa"));
     // private var tokens = HashMap.HashMap<Nat, Principal>(100, isEq, hashNat);
@@ -113,8 +114,9 @@ actor class ICPunk (_name: Text, _symbol: Text, _totalSupply: Nat, _owner: Princ
         };
     };
 
+
     ///Returns random number of token that is available for claim
-    private func getRandomToken() : async Nat {
+    public func getRandomToken() : async Nat {
         var blob = await Random.blob();
 
         var generator = Random.Finite(blob);
@@ -126,7 +128,7 @@ actor class ICPunk (_name: Text, _symbol: Text, _totalSupply: Nat, _owner: Princ
 
         var result = number*remainingTokensCount_/maxValue;
 
-        return result;
+        return remainingTokens_[result];
     };
 
     //Claim Random Punk, single principal can claim max one punk
@@ -136,9 +138,18 @@ actor class ICPunk (_name: Text, _symbol: Text, _totalSupply: Nat, _owner: Princ
 
         //Check if principal has already claimed token, if yes abort
         var exist = owners_.get(msg.caller);
-        assert(Option.isSome(exist));
+        assert(Option.isNull(exist));
 
         var tokenId = await getRandomToken();
+
+        //Remove token from claiming list
+        remainingTokensCount_ -= 1;
+
+        var filtered = Array.filter(remainingTokens_, func (a: Nat) : Bool {
+            return a != tokenId;
+        });
+
+        remainingTokens_ := filtered;
 
         //Assign token to sender principal
         tokens_[tokenId] := Option.make(msg.caller);
@@ -149,6 +160,36 @@ actor class ICPunk (_name: Text, _symbol: Text, _totalSupply: Nat, _owner: Princ
 
         //Return claimed token Id
         tokenId;
+    };
+
+    //Marks tokens in given range as enabled for claiming, only then users can claim those tokens
+    public shared(msg) func enableClaim(from: Nat, to: Nat) {
+        assert(msg.caller == owner_); //Only owner can call this function
+        assert(from < to);
+        var counter = from;
+
+        while (counter < to)  {
+            //Check if given token is not already claimed (if yes then it cannot be once again put for claiming)
+            assert(Option.isNull(tokens_[counter]));
+            counter +=1;
+        };
+
+        var buffer = Buffer.Buffer<Nat>(to-from);
+
+        counter := from;
+        while (counter < to)  {
+            buffer.add(counter);
+
+            counter +=1;
+        };
+
+        remainingTokens_ := Array.append(remainingTokens_, buffer.toArray());
+        remainingTokensCount_ += (to-from);
+    };
+
+    ///Returns number of all tokens
+    public query func remainingTokens() : async Nat {
+        return remainingTokensCount_;
     };
 
     // ///Used to claim tokens, this should be made obsolete, 
