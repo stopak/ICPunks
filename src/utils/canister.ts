@@ -15,6 +15,13 @@ const ICPunks = actorController;
 
 export type Optional<Type> = [Type] | [];
 
+export async function getRemainingTokensCount(): Promise<BigInt> {
+  var actor = await ICPunks.actor;
+  var count = await actor.remainingTokens();
+
+  return count;
+}
+
 export async function listTokens() : Promise<([] | Principal)[]> {
   var actor = await ICPunks.actor;
   var tokens = await actor.listTokens() as ([] | Principal)[];
@@ -22,11 +29,18 @@ export async function listTokens() : Promise<([] | Principal)[]> {
   return tokens;
 }
 
-export async function claimToken(tokenId: number) : Promise<boolean> {
+export async function claimRandomToken() : Promise<bigint> {
   var actor = await ICPunks.actor;
-  var result = await actor.claim(BigInt(tokenId));
+  var result = await actor.claimRandom();
 
   return result;
+}
+
+export async function getUserTokens(user: Principal) : Promise<bigint[]> {
+  var actor = await ICPunks.actor;
+  var tokens = actor.userTokens(user)
+
+  return tokens;
 }
 
 // export function getUserFromStorage(

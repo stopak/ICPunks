@@ -7,6 +7,7 @@ $sec-dark: rgba(20,135,202,1);
 body {
     font-family: Segoe UI;
     font-size: 22px;
+    line-height: 1.15;
 }
 
 h1, h2 {
@@ -34,7 +35,7 @@ h1, h2 {
     p {
         font-weight: bold;
         font-size: 26px;
-        padding-top: 12px;
+        padding-top: 18px;
     }
 }
 .sdark-background {
@@ -87,9 +88,32 @@ h1, h2 {
     font-size: 56px;
     font-weight: bold;
     filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.761));
-    padding-top: 10px;
+    padding-top: 20px;
 }
 
+.background-radial {
+    background: radial-gradient(#004d91, #000828);
+    color: white;
+}
+
+.text-black {
+    color: black;
+}
+
+#Path_608_r {
+    opacity: 0.97;
+    fill: url(#Path_608_r);
+}
+.Path_608_r {
+    filter: drop-shadow(0px 3px 22px rgba(0, 0, 0, 0.231));
+    overflow: visible;
+    position: absolute;
+    width: 1988.5px;
+    height: 1950.363px;
+    left: -2.5px;
+    top: 965.637px;
+    transform: matrix(1,0,0,1,0,0);
+}
 
 #Mask_Group_11 {
     position: absolute;
@@ -112,7 +136,7 @@ h1, h2 {
     width: 956px;
     height: 956px;
     left: 792px;
-    top: 30px;
+    top: 25px;
     overflow: visible;
 }
 #Mask_Group_10 {

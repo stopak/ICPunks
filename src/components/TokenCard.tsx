@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import { useAuth } from "src/utils";
 
-import { claimToken } from "../utils/canister";
 
 export default function TokenCard({ value, index }: { value: ([] | Principal), index: number }) {
     const [ownerText, setOwnerText] = useState("");
@@ -28,21 +27,21 @@ export default function TokenCard({ value, index }: { value: ([] | Principal), i
     }, [value, authContext]);
 
     async function claimTokenButton() {
-        if (!authContext.isAuthenticated) return;
-        if (isWorking) return;
+        // if (!authContext.isAuthenticated) return;
+        // if (isWorking) return;
 
-        setWorking(true);
+        // setWorking(true);
 
-        setClaimText(<>Claiming ...</>);
+        // setClaimText(<>Claiming ...</>);
         
-        var result = await claimToken(index);
+        // var result = await claimToken(index);
 
-        if (result)
-            setClaimText(<>Claimed!</>);
-        else
-            setClaimText(<>Error during claiming</>);
+        // if (result)
+        //     setClaimText(<>Claimed!</>);
+        // else
+        //     setClaimText(<>Error during claiming</>);
 
-        setWorking(false);
+        // setWorking(false);
     }
 
     let url = "/token/"+index;

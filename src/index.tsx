@@ -4,12 +4,15 @@ import { updateHead, ProvideAuth } from "./utils";
 import { AppRouter } from "./AppRouter";
 import Header from "./components/Header";
 import "./styles.scss";
+import { ProvideState } from "./utils/state";
 
 function ICPunksApp() {
   return (
     <ProvideAuth>
-      <Header />
-      <AppRouter />
+      <ProvideState>
+        <Header />
+        <AppRouter />
+      </ProvideState>
     </ProvideAuth>
   );
 }

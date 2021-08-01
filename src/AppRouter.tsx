@@ -4,14 +4,14 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import Token from "./components/Token";
+// import Token from "./components/Token";
 // import { TransitionGroup, CSSTransition } from "react-transition-group";
 // import { SignIn } from "./views/SignIn";
 // import { SignUp } from "./components/SignUp";
 // import { useAuth } from "./utils";
 // import { PrivateRoutes } from "./components/PrivateRoutes";
 
-import { Dashboard } from "./views/Dashboard";
+import Dashboard from "./views/Dashboard";
 
 // function wrapRouteWithFade(Component) {
 //   return ({ match }) => (
@@ -33,7 +33,7 @@ export function AppRouter() {
     <Router>
       <Switch>
         <Route exact path="/" component={Dashboard} />
-        <Route path="/token/:tokenId" component={Token} />
+        {/* <Route path="/token/:tokenId" component={Token} /> */}
       </Switch>
     </Router>
   );

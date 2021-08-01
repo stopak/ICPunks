@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dfx start --no-artificial-delay --clean --background 
+# dfx start --no-artificial-delay --background --clean 
 PUBLIC_KEY="principal \"$( \
     dfx identity get-principal
 )\""
