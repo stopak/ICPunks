@@ -1,11 +1,11 @@
-$main-color: rgba(255,1,2,1);
-$main-dark: rgba(161,6,6,1);
+$main-color: rgba(255, 1, 2, 1);
+$main-dark: rgba(161, 6, 6, 1);
 
-$sec-color: rgba(53,172,240,1);
-$sec-dark: rgba(20,135,202,1);
+$sec-color: rgba(53, 172, 240, 1);
+$sec-dark: rgba(20, 135, 202, 1);
 
-$gray-color: rgba(241,241,241,1);
-$dgray-color: rgba(35,35,35,1);
+$gray-color: rgba(241, 241, 241, 1);
+$dgray-color: rgba(35, 35, 35, 1);
 
 body {
     font-family: Segoe UI;
@@ -13,7 +13,8 @@ body {
     line-height: 1.15;
 }
 
-h1, h2 {
+h1,
+h2 {
     font-weight: bold;
 }
 
@@ -26,6 +27,7 @@ h1, h2 {
     text-align: center;
     background-color: $main-color;
 }
+
 .dark-background {
     background-color: $main-dark;
 }
@@ -50,19 +52,21 @@ h1, h2 {
     text-align: center;
     background-color: $sec-color;
     height: 67px;
+
     p {
         font-weight: bold;
         font-size: 26px;
         padding-top: 18px;
     }
 }
+
 .sdark-background {
     background-color: $sec-dark;
     height: 73px;
 }
 
 .title {
-    font-size:132px;
+    font-size: 132px;
     color: $main-color;
 }
 
@@ -86,7 +90,7 @@ h1, h2 {
 .counter {
     p {
         font-weight: bold;
-        margin-top: .25rem!important;
+        margin-top: .25rem !important;
     }
 
     .button {
@@ -97,7 +101,8 @@ h1, h2 {
         height: 112px;
     }
 
-    .button, .button-wrapper {
+    .button,
+    .button-wrapper {
         width: 106px;
     }
 }
@@ -128,19 +133,24 @@ h1, h2 {
     background-color: white;
     display: inline-block;
     margin: 5px;
+
     div {
         margin: auto;
     }
+
     path {
         fill: #232323;
     }
+
     #github {
         padding-top: 12px;
     }
 }
 
 .roadmap {
-    padding: 60px 250px;
+    @media (min-width: 1040px) {
+        padding: 60px 250px;
+    }
 
     h1 {
         margin-bottom: 70px;
@@ -152,7 +162,7 @@ h1, h2 {
         border: 10px solid white;
         border-radius: 20px;
         margin: 5px;
-        color: rgba(8,37,78,1);
+        color: rgba(8, 37, 78, 1);
         font-size: 18px;
         padding: 20px;
         filter: drop-shadow(0px 3px 30px rgba(0, 0, 0, 0.22));
@@ -162,17 +172,18 @@ h1, h2 {
             border: 10px solid white;
             border-radius: 20px;
             margin-top: -60px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             margin-left: -20px;
             margin-right: -20px;
-            padding: 5px;
-            color: white; 
-            background-color: rgba(8,37,78,1);
-            font-size: 38px;
+            padding: 10px;
+            color: white;
+            background-color: rgba(8, 37, 78, 1);
+            font-size: 26px;
             text-align: center;
             font-weight: bold;
 
         }
+
         span {
             font-size: 18px;
             vertical-align: middle;
@@ -181,34 +192,43 @@ h1, h2 {
     }
 }
 
+
 .roadmap2 {
-    padding: 60px 250px;
+    @media (min-width: 1040px) {
+        padding: 60px 250px;
+    }
+
     font-size: 22px;
     position: relative;
-    
+
+    padding-bottom: 200px;
+
     h1 {
-        margin: 0 !important;
+        margin-bottom: 60px;
     }
+
     .col-xl-7 {
         border: 10px solid white;
         border-radius: 20px;
         margin: 5px;
-        color: rgba(8,37,78,1);
+        color: rgba(8, 37, 78, 1);
         padding: 20px;
         filter: drop-shadow(0px 3px 30px rgba(0, 0, 0, 0.22));
 
-        background-color: rgba(235,235,235,1);
+        background-color: rgba(235, 235, 235, 1);
         filter: drop-shadow (0px 3px 30px rgba(0, 0, 0, 0.22));
         line-height: 32px;
-        color: rgba(14,0,4,1);
+        color: rgba(14, 0, 4, 1);
         margin-top: 20px;
         margin-bottom: 20px;
         padding: 40px;
+
         span {
             font-weight: bold;
         }
     }
 }
+
 .newsletter {
     padding: 0px 250px;
 
@@ -223,277 +243,144 @@ h1, h2 {
     height: 44px;
     margin-top: 20px;
     margin-bottom: 40px;
+
     div {
-    height: 40px;
-    padding-left: 40px;
-    padding-right: 40px;
-    p {
-        padding-top: 7px;
-        font-size: 22px;
-    }
+        height: 40px;
+        padding-left: 40px;
+        padding-right: 40px;
+
+        p {
+            padding-top: 7px;
+            font-size: 22px;
+        }
     }
 }
 
-#Path_608_r {
-    opacity: 0.97;
-    fill: url(#Path_608_r);
-}
-.Path_608_r {
-    filter: drop-shadow(0px 3px 22px rgba(0, 0, 0, 0.231));
-    overflow: visible;
-    position: absolute;
-    width: 1988.5px;
-    height: 1950.363px;
-    left: -2.5px;
-    top: 965.637px;
-    transform: matrix(1,0,0,1,0,0);
+#Union_2 {
+    fill: rgba(255, 255, 255, 1);
+    stroke: rgba(14, 0, 4, 1);
+    stroke-width: 5px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
 }
 
-#Mask_Group_11 {
+.Union_2 {
+    width: 600px;
+    height: 600px;
     position: absolute;
-    width: 551.285px;
-    height: 432.781px;
-    left: -170.285px;
-    top: 351.068px;
-    overflow: visible;
-}
-#Mask_Group_37 {
-    position: absolute;
-    width: 388.533px;
-    height: 456.014px;
-    left: -71px;
-    top: 30px;
-    overflow: visible;
-}
-#Clown1 {
-    position: absolute;
-    width: 956px;
-    height: 956px;
-    left: 792px;
-    top: 25px;
-    overflow: visible;
-}
-#Mask_Group_10 {
-    position: absolute;
-    width: 378.267px;
-    height: 209.637px;
-    left: -52.563px;
-    top: 734.864px;
-    overflow: visible;
-}
-#Mask_Group_9 {
-    position: absolute;
-    width: 405.863px;
-    height: 342.186px;
-    left: 1571.755px;
-    top: 164.907px;
-    overflow: visible;
-}
-#Mask_Group_32 {
-    position: absolute;
-    width: 551.285px;
-    height: 432.781px;
-    left: 1100px;
-    top: 100px;
-    overflow: hidden;
-}
-#Mask_Group_33 {
-    position: absolute;
-    width: 388.533px;
-    height: 456.014px;
+    top: 600px;
     left: 1200px;
-    top: 400px;
-    overflow: hidden;
-}
-#Mask_Group_34 {
-    position: absolute;
-    width: 607.823px;
-    height: 548.672px;
-    left: 780px;
-    top: -160px;
-    overflow: hidden;
-}
-#Mask_Group_36 {
-    position: absolute;
-    width: 1923.483px;
-    height: 398.469px;
-    left: 0;
-    top: -30px;
-    overflow: hidden;
-}
-#Mask_Group_5 {
-    position: absolute;
-    width: 594.517px;
-    height: 551.512px;
-    left: 1554.83px;
-    top: 518.564px;
-    overflow: visible;
-}
-#Mask_Group_4 {
-    position: absolute;
-    width: 532.176px;
-    height: 502.677px;
-    left: 1482px;
-    top: 610.735px;
-    overflow: visible;
+    z-index: 999;
 }
 
-#Group_1665 {
-    position: absolute;
-    width: 243px;
-    height: 177.332px;
-    left: 278px;
-    top: 4708.95px;
-    overflow: visible;
+.bgimg {
+    display: none;
 }
 
+@media (min-width: 1600px) {
+    .bgimg {
+        display: initial;
+    }
+}
 
-
-
-#SOCIAL_MEDIA {
-    overflow: visible;
-    width: 79px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Segoe UI;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    color: rgba(255,255,255,1);
-}
-#Group_1600 {
-    width: 54px;
-    height: 54px;
-    overflow: visible;
-}
-#Ellipse_76 {
-    fill: rgba(255,255,255,1);
-}
-.Ellipse_76 {
-    overflow: visible;
-    width: 54px;
-    height: 54px;
-}
-#discord {
-    width: 30.41px;
-    height: 20.818px;
-    overflow: visible;
-}
-#Subtraction_1 {
-    fill: rgba(35,35,35,1);
-}
-.Subtraction_1 {
-    overflow: visible;
-    width: 30.41px;
-    height: 20.818px;
-    transform: matrix(1,0,0,1,0,0);
-}
-#Group_1601 {
-    width: 54px;
-    height: 54px;
-    overflow: visible;
-}
-#Ellipse_75 {
-    fill: rgba(255,255,255,1);
-}
-.Ellipse_75 {
-    overflow: visible;
-    width: 54px;
-    height: 54px;
-}
-#twitter {
-    width: 26.69px;
-    height: 21.686px;
-    overflow: visible;
-}
-#Group_1598 {
-    width: 26.69px;
-    height: 21.686px;
-    overflow: visible;
-}
-#Path_618 {
-    fill: rgba(35,35,35,1);
-}
-.Path_618 {
-    overflow: visible;
-    width: 26.69px;
-    height: 21.686px;
-    transform: matrix(1,0,0,1,0,0);
-}
-#Group_1602 {
-    width: 54.054px;
-    height: 54.054px;
-    overflow: visible;
-}
-#telegram {
-    fill: rgba(255,255,255,1);
-}
-.telegram {
-    overflow: visible;
-    width: 54.054px;
-    height: 54.054px;
-    transform: matrix(1,0,0,1,0,0);
-}
-#Group_1603 {
-    width: 54px;
-    height: 54px;
-    overflow: visible;
-}
-#Ellipse_77 {
-    fill: rgba(255,255,255,1);
-}
-.Ellipse_77 {
-    overflow: visible;
-    width: 54px;
-    height: 54px;
-    left: 0px;
-    top: 0px;
-}
-#github {
-    width: 28.5px;
-    height: 31.416px;
-    overflow: visible;
-}
-#Group_1599 {
-    width: 28.5px;
-    height: 31.416px;
-    overflow: visible;
-}
-#Path_619 {
-    fill: rgba(35,35,35,1);
-}
-.Path_619 {
-    overflow: visible;
-    width: 28.5px;
-    height: 31.417px;
-    transform: matrix(1,0,0,1,0,0);
-}
-#Privacy_policy {
-    left: 0px;
-    top: 161.332px;
-    position: absolute;
-    overflow: visible;
-    width: 89px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Segoe UI;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    color: rgba(255,255,255,1);
-    text-transform: uppercase;
-}
-#Stay_up_to_date_with_our_new_r {
-    left: 278px;
-    top: 4376.282px;
-    position: absolute;
-    overflow: visible;
-    width: 439px;
-    height: 71px;
-    text-align: left;
-    font-family: Segoe UI;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    color: rgba(255,255,255,1);
+@media (min-width: 1040px) {
+    #Mask_Group_19 {
+        position: absolute;
+        width: 346.604px;
+        height: 235.408px;
+        left: 1300px;
+        top: 680px;
+        overflow: visible;
+        z-index: 999;
+    }
+    #Mask_Group_11 {
+        position: absolute;
+        width: 551.285px;
+        height: 432.781px;
+        left: -170.285px;
+        top: 351.068px;
+        overflow: visible;
+    }
+    #Mask_Group_37 {
+        position: absolute;
+        width: 388.533px;
+        height: 456.014px;
+        left: -71px;
+        top: 30px;
+        overflow: visible;
+    }
+    #Clown1 {
+        position: absolute;
+        width: 956px;
+        height: 956px;
+        left: 792px;
+        top: 25px;
+        overflow: visible;
+    }
+    #Mask_Group_10 {
+        position: absolute;
+        width: 378.267px;
+        height: 209.637px;
+        left: -52.563px;
+        top: 734.864px;
+        overflow: visible;
+    }
+    #Mask_Group_9 {
+        position: absolute;
+        width: 405.863px;
+        height: 342.186px;
+        left: 1571.755px;
+        top: 164.907px;
+        overflow: visible;
+    }
+    #Mask_Group_32 {
+        position: absolute;
+        width: 551.285px;
+        height: 432.781px;
+        left: 1100px;
+        top: 160px;
+        overflow: hidden;
+    }
+    #Mask_Group_33 {
+        position: absolute;
+        width: 388.533px;
+        height: 456.014px;
+        left: 1200px;
+        top: 460px;
+        overflow: hidden;
+    }
+    #Mask_Group_34 {
+        position: absolute;
+        width: 607.823px;
+        height: 548.672px;
+        left: 780px;
+        top: -160px;
+        overflow: hidden;
+    }
+    #Mask_Group_36 {
+        position: absolute;
+        width: 1923.483px;
+        height: 398.469px;
+        left: 0;
+        top: -30px;
+        overflow: hidden;
+    }
+    #Mask_Group_5 {
+        position: absolute;
+        width: 594.517px;
+        height: 551.512px;
+        left: 1554.83px;
+        top: 518.564px;
+        overflow: visible;
+    }
+    #Mask_Group_4 {
+        position: absolute;
+        width: 532.176px;
+        height: 502.677px;
+        left: 1482px;
+        top: 610.735px;
+        overflow: visible;
+    }
 }

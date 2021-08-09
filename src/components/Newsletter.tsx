@@ -20,10 +20,10 @@ export default function Newsletter() {
                     </div>
                 </div>
 
-                <img id="Mask_Group_34" alt="" src="/img/Mask_Group_34.png" style={{ overflow: "hidden" }} />
-                <img id="Mask_Group_36" alt="" src="/img/Mask_Group_36.png" style={{ overflow: "hidden" }} />
-
-
+                <div className="bgimg">
+                    <img id="Mask_Group_34" alt="" src="/img/Mask_Group_34.png" style={{ overflow: "hidden" }} />
+                    <img id="Mask_Group_36" alt="" src="/img/Mask_Group_36.png" style={{ overflow: "hidden" }} />
+                </div>
                 {/* <iframe className="mj-w-res-iframe" frameBorder="0" scrolling="no" marginHeight={0} marginWidth={0} src="https://app.mailjet.com/widget/iframe/6aKb/K8Y" width="100%"></iframe>
 
             <script type="text/javascript" src="https://app.mailjet.com/statics/js/iframeResizer.min.js"></script> */}

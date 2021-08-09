@@ -63,8 +63,10 @@ export default function Description() {
                             <span>Q1 2022:</span> start experimenting with crosschain solutions, so that you can bring your favorite NFTs to Dfinity from Ethereum or Binance Smart Chain.
                         </Col>
                     </Row>
-                    <img id="Mask_Group_32" alt="" src="/img/Mask_Group_32.png" />
-                    <img id="Mask_Group_33" alt="" src="/img/Mask_Group_33.png" />
+                    <div className="bgimg">
+                        <img id="Mask_Group_32" alt="" src="/img/Mask_Group_32.png" />
+                        <img id="Mask_Group_33" alt="" src="/img/Mask_Group_33.png" />
+                    </div>
                 </Container>
             </div>
             <Newsletter />
