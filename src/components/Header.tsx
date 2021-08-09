@@ -3,7 +3,7 @@ import Account from "./Account";
 
 export default function Header() {
     return (
-        <>
+        <div className="box-shadow">
             <Container>
                 <Navbar bg="white">
                     <Navbar.Brand href="#home"><Image src="/img/dfinity_logo.png" width="231" /></Navbar.Brand>
@@ -12,6 +12,6 @@ export default function Header() {
                     </div>
                 </Navbar>
             </Container>
-        </>
+        </div>
     );
 }

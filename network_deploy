@@ -7,4 +7,4 @@ dfx ledger --network ic create-canister dkzjk-sxlxb-cdh5x-rtexw-7y54l-yfwbq-rhay
 
 ghcli-liaaa-aaaah-qaj7a-cai
 
-dfx identity --network ic deploy-wallet ghcli-liaaa-aaaah-qaj7a-cai
+dfx identity --network ic deploy-wallet read

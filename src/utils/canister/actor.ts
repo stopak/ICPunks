@@ -9,12 +9,12 @@ import ICPunk from "./icpunks";
 
 import dfxConfig from "../../../dfx.json";
 
-const DFX_NETWORK = process.env.DFX_NETWORK || "local";
+const DFX_NETWORK = process.env.DFX_NETWORK || process.env.REACT_APP_DFX_NETWORK || "local";
 const isLocalEnv = DFX_NETWORK === "local";
 
 function getHost() {
   // Setting host to undefined will default to the window location 👍🏻
-  return isLocalEnv ? dfxConfig.networks.local.bind : undefined;
+  return dfxConfig.networks.ic.providers[0];
 }
 
 const host = getHost();

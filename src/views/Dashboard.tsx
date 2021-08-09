@@ -1,59 +1,25 @@
 import { Container, Col, Row, Card } from "react-bootstrap";
 import ClaimButton from "src/components/ClaimButton";
+import Countdown from "src/components/Countdown";
+import Description from "src/components/Description";
 import OwnedTokens from "src/components/OwnedTokens";
 import Token from "src/components/Token";
 
 export default function Dashboard() {
     return (
         <>
-            <div style={{ position: "absolute", width: "100%", height: "1000px", overflow: "hidden" }}>
-                <img id="Mask_Group_11" alt="" src="/img/Mask_Group_11.png" style={{ overflow: "hidden" }} srcSet="/img/Mask_Group_11.png 1x, Mask_Group_11@2x.png 2x" />
-                <img id="Mask_Group_37" alt="" src="/img/Mask_Group_33.png" style={{ overflow: "hidden" }} srcSet="/img/Mask_Group_33.png 1x, Mask_Group_33@2x.png 2x" />
-                <img id="Clown1" alt="" src="/img/Clown1.png" style={{ overflow: "hidden" }} srcSet="/img/Clown1.png 1x, Clown1@2x.png 2x" />
-                <img id="Mask_Group_10" alt="" src="/img/Mask_Group_10.png" style={{ overflow: "hidden" }} srcSet="/img/Mask_Group_10.png 1x, Mask_Group_10@2x.png 2x" />
-                <img id="Mask_Group_9" alt="" src="/img/Mask_Group_9.png" style={{ overflow: "hidden" }} srcSet="/img/Mask_Group_9.png 1x, Mask_Group_9@2x.png 2x" />
-                <img id="Mask_Group_5" alt="" src="/img/Mask_Group_5.png" style={{ overflow: "hidden" }} srcSet="/img/Mask_Group_5.png 1x, Mask_Group_5@2x.png 2x" />
-                <img id="Mask_Group_4" alt="" src="/img/Mask_Group_4.png" style={{ overflow: "hidden" }} srcSet="/img/Mask_Group_4.png 1x, Mask_Group_4@2x.png 2x" />
+            <div style={{ position: "absolute", width: "100%", height: "2000px", overflow: "hidden" }}>
+                <img id="Mask_Group_11" alt="" src="/img/Mask_Group_11.png" style={{ overflow: "hidden" }} />
+                <img id="Mask_Group_37" alt="" src="/img/Mask_Group_33.png" style={{ overflow: "hidden" }} />
+                <img id="Clown1" alt="" src="/img/Clown1.png" style={{ overflow: "hidden" }} />
+                <img id="Mask_Group_10" alt="" src="/img/Mask_Group_10.png" style={{ overflow: "hidden" }} />
+                <img id="Mask_Group_9" alt="" src="/img/Mask_Group_9.png" style={{ overflow: "hidden" }} />
+                <img id="Mask_Group_5" alt="" src="/img/Mask_Group_5.png" style={{ overflow: "hidden" }} />
+                <img id="Mask_Group_4" alt="" src="/img/Mask_Group_4.png" style={{ overflow: "hidden" }} />
+
             </div>
-            <Container style={{height: "965px"}}>
-                <Row className="mb-5">
-                    <Col xl="6" lg="12">
-                        <h1 className="title mt-5">ICPunks</h1>
-                        <h2><span className="main-color mb-5">First NFT's</span> on the Internet Computer</h2>
-                        <p className="mt-5">10,000 randomly generated, unique collectible clowns with proof of ownership stored on the Internet Computer blockchain. Created as a reference to a meme comparing the Internet Computer token (ICP) with the Insane Clown Posse - an American hip hop duo founded in 1989.</p>
-                    </Col>
-                </Row>
-                <Row className="mt-5 mb-5">
-                    <Col xl="6" lg="12" className="text-center">
-                        <h2>Drop countdown</h2>
-                    </Col>
-                </Row>
-                <Row className="mb-5 text-center">
-                    <Col xl="6" lg="12">
-                        <Row className="counter">
-                            <Col>
-                                <div className="button-wrapper dark-background mx-auto"><div className="button main-background"><p className="timer">1</p></div></div>
-                                <p>DAY</p>
-                            </Col>
-                            <Col>
-                                <div className="button-wrapper dark-background mx-auto"><div className="button main-background"><p className="timer">12</p></div></div>
-                                <p>HR</p>
-                            </Col>
-                            <Col>
-                                <div className="button-wrapper dark-background mx-auto"><div className="button main-background"><p className="timer">23</p></div></div>
-                                <p>MIN</p>
-                            </Col>
-                            <Col>
-                                <div className="button-wrapper dark-background mx-auto"><div className="button main-background"><p className="timer">34</p></div></div>
-                                <p>SEC</p>
-                            </Col>
-                        </Row>
-                        <Row className="mb-3">
-                            <ClaimButton />
-                        </Row>
-                    </Col>
-                </Row>
-            </Container>
+
+            <Countdown/>
 
             <div className="background-radial mt-3 pb-5">
                 <Container >
@@ -78,6 +44,8 @@ export default function Dashboard() {
                     </Row>
                 </Container>
             </div>
+
+            <Description />
         </>
     );
 }

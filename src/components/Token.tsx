@@ -9,7 +9,7 @@ export default function Token() {
     const state = useLocalState();
 
     const [desc, setDesc] = useState("???");
-    const [imgUrl, setImgUrl] = useState("/img/image_4_3.bpc.png");
+    const [imgUrl, setImgUrl] = useState("/img/image_4_3_bpc.png");
 
     useEffect(() => {
         if (state.displayToken !== null && state.displayToken !== undefined) {
