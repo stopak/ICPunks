@@ -15,6 +15,7 @@ const isLocalEnv = DFX_NETWORK === "local";
 function getHost() {
   // Setting host to undefined will default to the window location 👍🏻
   return dfxConfig.networks.ic.providers[0];
+  // return dfxConfig.networks.providers[0];
 }
 
 const host = getHost();

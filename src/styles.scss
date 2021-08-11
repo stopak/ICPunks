@@ -82,9 +82,18 @@ h2 {
     border-color: $main-dark;
     border-style: solid;
 }
+input.button {
+    padding: 15px;
+    width: 400px;
+}
 
 .button-wrapper {
     border-radius: 10px;
+}
+
+.input-wrapper {
+    display: inline-block;
+    height: 60px;
 }
 
 .counter {
@@ -147,11 +156,19 @@ h2 {
     }
 }
 
-.roadmap {
+.rwdcontainer {
     @media (min-width: 1040px) {
-        padding: 60px 250px;
+        padding: 30px 100px;
     }
 
+    @media (min-width: 1440px) {
+        padding: 30px 250px;
+    }
+}
+
+
+
+.roadmap {
     h1 {
         margin-bottom: 70px;
         font-weight: bold;
@@ -193,11 +210,9 @@ h2 {
 }
 
 
-.roadmap2 {
-    @media (min-width: 1040px) {
-        padding: 60px 250px;
-    }
 
+
+.roadmap2 {
     font-size: 22px;
     position: relative;
 
@@ -230,8 +245,6 @@ h2 {
 }
 
 .newsletter {
-    padding: 0px 250px;
-
     h1 {
         font-size: 52px;
         padding-top: 30px;
@@ -256,131 +269,155 @@ h2 {
     }
 }
 
-#Union_2 {
-    fill: rgba(255, 255, 255, 1);
-    stroke: rgba(14, 0, 4, 1);
-    stroke-width: 5px;
-    stroke-linejoin: miter;
-    stroke-linecap: butt;
-    stroke-miterlimit: 4;
-    shape-rendering: auto;
+.inactive {
+    opacity: 0.2;
 }
 
-.Union_2 {
-    width: 600px;
-    height: 600px;
-    position: absolute;
-    top: 600px;
-    left: 1200px;
-    z-index: 999;
+.steps {
+    .col {
+        border-radius: 10px;
+        margin: 30px;
+        border: 3px solid white;
+    }
+    .image {
+        height: 200px;
+        vertical-align: middle;
+        padding-top: 25px;
+        img {
+            vertical-align: middle;
+        }
+    }
+    .step {
+        font-size: 18px;
+        height: 30px;
+
+    }
+    .name {
+        font-size: 28px;
+        margin-bottom: 30px;
+        height: 64px;
+    }
+
+    .desc {
+        height: 120px;
+    }
+    .action {
+        color: rgba(19,129,192,1);
+        padding: 12px;
+        margin-left: -16px;
+        margin-right: -16px;
+        background-color: white;
+        font-weight: bold;
+    }
 }
 
-.bgimg {
-    display: none;
-}
-
+// .bgimg {
+//     display: none;
+// }
 @media (min-width: 1600px) {
     .bgimg {
         display: initial;
     }
 }
 
-@media (min-width: 1040px) {
-    #Mask_Group_19 {
+// @media (min-width: 1040px) {
+
+    #Mask_Group_37 {
         position: absolute;
-        width: 346.604px;
-        height: 235.408px;
-        left: 1300px;
-        top: 680px;
-        overflow: visible;
-        z-index: 999;
+        top: 30px;
+        left: -450px;
     }
     #Mask_Group_11 {
         position: absolute;
-        width: 551.285px;
-        height: 432.781px;
-        left: -170.285px;
-        top: 351.068px;
-        overflow: visible;
-    }
-    #Mask_Group_37 {
-        position: absolute;
-        width: 388.533px;
-        height: 456.014px;
-        left: -71px;
-        top: 30px;
-        overflow: visible;
-    }
-    #Clown1 {
-        position: absolute;
-        width: 956px;
-        height: 956px;
-        left: 792px;
-        top: 25px;
-        overflow: visible;
+        left: -550px;
+        top: 350px;
     }
     #Mask_Group_10 {
         position: absolute;
-        width: 378.267px;
-        height: 209.637px;
-        left: -52.563px;
-        top: 734.864px;
+        left: -420px;
+        top: 740px;
+    }
+    #Clown1 {
+        position: absolute;
+        left: 400px;
+        top: 25px;
         overflow: visible;
+        opacity: 0.2;
+
+        @media (min-width: 1200px) {
+            opacity: 1;
+        }
     }
     #Mask_Group_9 {
         position: absolute;
-        width: 405.863px;
-        height: 342.186px;
-        left: 1571.755px;
-        top: 164.907px;
-        overflow: visible;
-    }
-    #Mask_Group_32 {
-        position: absolute;
-        width: 551.285px;
-        height: 432.781px;
-        left: 1100px;
-        top: 160px;
-        overflow: hidden;
-    }
-    #Mask_Group_33 {
-        position: absolute;
-        width: 388.533px;
-        height: 456.014px;
-        left: 1200px;
-        top: 460px;
-        overflow: hidden;
-    }
-    #Mask_Group_34 {
-        position: absolute;
-        width: 607.823px;
-        height: 548.672px;
-        left: 780px;
-        top: -160px;
-        overflow: hidden;
-    }
-    #Mask_Group_36 {
-        position: absolute;
-        width: 1923.483px;
-        height: 398.469px;
-        left: 0;
-        top: -30px;
-        overflow: hidden;
+        left: 1150px;
+        top: 164px;
     }
     #Mask_Group_5 {
         position: absolute;
-        width: 594.517px;
-        height: 551.512px;
-        left: 1554.83px;
-        top: 518.564px;
-        overflow: visible;
+        left: 1150px;
+        top: 518px;
     }
-    #Mask_Group_4 {
+
+    #Union_2 {
+        fill: rgba(255, 255, 255, 1);
+        stroke: rgba(14, 0, 4, 1);
+        stroke-width: 5px;
+        stroke-linejoin: miter;
+        stroke-linecap: butt;
+        stroke-miterlimit: 4;
+        shape-rendering: auto;
+    }
+    .Union_2 {
+        width: 300px;
+        height: 300px;
         position: absolute;
-        width: 532.176px;
-        height: 502.677px;
-        left: 1482px;
-        top: 610.735px;
-        overflow: visible;
+        top: 670px;
+        left: 850px;
+        z-index: 999;
     }
-}
+    #Mask_Group_19 {
+        position: absolute;
+        left: 910px;
+        top: 720px;
+        z-index: 999;
+    }
+
+    #Mask_Group_32 {
+        position: absolute;
+        left: 50px;
+        top: -100px;
+        display: none;
+
+        @media (min-width: 1200px) {
+            display: initial;
+        }
+    }
+    #Mask_Group_33 {
+        position: absolute;
+        left: 150px;
+        top: 250px;
+        overflow: hidden;
+        display: none;
+
+        @media (min-width: 1200px) {
+            display: initial;
+        }
+    }
+
+    #Mask_Group_34 {
+        position: absolute;
+        left: 780px;
+        top: -60px;
+        z-index: 990;
+    }
+
+    #Mask_Group_36 {
+        position: absolute;
+        left: 1200px;
+        top: 70px;
+        z-index: 990;
+    }
+
+
+// }

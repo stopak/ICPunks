@@ -6,7 +6,7 @@ export default function Header() {
         <div className="box-shadow">
             <Container>
                 <Navbar bg="white">
-                    <Navbar.Brand href="#home"><Image src="/img/dfinity_logo.png" width="231" /></Navbar.Brand>
+                    <Navbar.Brand href="#home"><Image src="/img/logo_short.png" width="120" /></Navbar.Brand>
                     <div className="ml-auto">
                         <Account />
                     </div>

@@ -6,7 +6,7 @@ export default function Description() {
     return (
         <>
             <div className="gray-background px-5">
-                <Container fluid className="roadmap">
+                <Container fluid className="roadmap rwdcontainer">
                     <h1 className="py-5">As we progress with how many ICPunks are given away, we have something special for you:</h1>
 
                     <Row>
@@ -44,29 +44,29 @@ export default function Description() {
 
                 </Container>
             </div>
-            <div className=" px-5">
-                <Container fluid className="roadmap2">
+            <div className="px-5" style={{overflow: 'hidden'}}>
+                <Container fluid className="roadmap2 rwdcontainer">
                     <h1 className="py-5">We also plan the future after all punks will be claimed:</h1>
 
                     <Row>
                         <Col xl="7">
                             <span>Q3 2021:</span> launch the ICPunks marketplace where you can trade, buy and sell your ICPunks for ICP tokens.
                         </Col>
-                    </Row>
-                    <Row>
-                        <Col xl="7">
-                            <span>Q4 2021:</span> open the ICPunks marketplace to other NFTs, and launch the first NFT marketplace on Dfinity. New small collection will be distributed to our supporters!
+                        <Col xl="3">
+                            <img id="Mask_Group_32" alt="" src="/img/Mask_Group_32.png" />
+                            <img id="Mask_Group_33" alt="" src="/img/Mask_Group_33.png" />
                         </Col>
                     </Row>
                     <Row>
                         <Col xl="7">
-                            <span>Q1 2022:</span> start experimenting with crosschain solutions, so that you can bring your favorite NFTs to Dfinity from Ethereum or Binance Smart Chain.
+                            <span>Q4 2021:</span> open the ICPunks marketplace to other NFTs, and launch the first NFT marketplace on Internet Computer. New small collection will be distributed to our supporters!
                         </Col>
                     </Row>
-                    <div className="bgimg">
-                        <img id="Mask_Group_32" alt="" src="/img/Mask_Group_32.png" />
-                        <img id="Mask_Group_33" alt="" src="/img/Mask_Group_33.png" />
-                    </div>
+                    <Row>
+                        <Col xl="7">
+                            <span>Q1 2022:</span> start experimenting with crosschain solutions, so that you can bring your favorite NFTs to Internet Computer from Ethereum or Binance Smart Chain.
+                        </Col>
+                    </Row>
                 </Container>
             </div>
             <Newsletter />
@@ -97,9 +97,6 @@ export default function Description() {
                             </svg>
                         </div>
                     </a>
-                    <div id="Privacy_policy">
-                        <span>Privacy policy</span>
-                    </div>
                 </Container>
             </div>
 
