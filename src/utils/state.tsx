@@ -1,21 +1,20 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./auth";
-import { authClient } from "./authClient";
-import { claimRandomToken, getRemainingTokensCount, getUserTokens } from "./canister";
 
 
 export interface StateContext {
-    remainingTokens: BigInt;
+    remainingTokens: BigInt | null;
     userTokens: BigInt[] | null
     displayToken: BigInt | null;
 
-    getRemainingTokens: () => void;
+    // getRemainingTokens: () => void;
     claimToken: () => Promise<void>;
 }
 
 export function useProvideState(): StateContext {
     const authContext = useAuth();
-    const [remainingTokens, setRemainingTokens] = useState<BigInt>(BigInt(0));
+
+    const [remainingTokens, setRemainingTokens] = useState<BigInt | null>(null);
 
     const [userTokens, setUserTokens] = useState<BigInt[] | null>(null);
     const [displayToken, setDisplayToken] = useState<BigInt | null>(null);
@@ -23,64 +22,76 @@ export function useProvideState(): StateContext {
     const [isLoading, setLoading] = useState(false);
 
     const getRemainingTokens = async function (): Promise<void> {
-        Promise.all([authClient.getIdentity(), authClient.isAuthenticated()]).then(
-            () => {
-                getRemainingTokensCount().then((count) => {
-                    setRemainingTokens(count);
-                })
-            }
-        );
+        if (authContext.icpunk === undefined) return;
+
+        var tokens = await authContext.icpunk.remainingTokens();
+
+        console.log("Remaining tokens "+tokens);
+
+        setRemainingTokens(tokens);
     };
 
-    getRemainingTokens();
+    // getRemainingTokens();
 
     const loadUserTokens = async function (): Promise<void> {
-        if (isLoading) return;
+        // if (isLoading) return;
 
-        if (authContext.identity !== undefined && !authContext.identity.getPrincipal().isAnonymous()) {
-            setLoading(true);
-            console.log("Loading user tokens");
-            let principal = authContext.identity?.getPrincipal();
+        // if (authContext.agent === undefined) return;
 
-            getUserTokens(principal).then((data) => {
-                console.log(data);
-                setUserTokens(data);
-                if (data.length > 0) {
-                    setDisplayToken(data[0]);
-                }
+        // setLoading(true);
 
-                setLoading(false);
-            }).catch(() => {
-                setLoading(false);
-            });
-        }
+        // await authContext.icpunk?.userTokens(authContext.principal as Principal);
+
+        // setLoading(false);
+        // if (authContext.identity !== undefined && !authContext.identity.getPrincipal().isAnonymous()) {
+        //     setLoading(true);
+        //     console.log("Loading user tokens");
+        //     let principal = authContext.identity?.getPrincipal();
+
+        //     getUserTokens(principal).then((data) => {
+        //         console.log(data);
+        //         setUserTokens(data);
+        //         if (data.length > 0) {
+        //             setDisplayToken(data[0]);
+        //         }
+
+        //         setLoading(false);
+        //     }).catch(() => {
+        //         setLoading(false);
+        //     });
+        // }
     };
 
-    useEffect(() => {
-        loadUserTokens();
-    }, [authContext.isAuthenticated, authContext.isAuthReady]);
+    
+
 
     const claimToken = async function (): Promise<void> {
-        let principal = authContext.identity?.getPrincipal();
-        let hex = principal?.toString();
+        // let hex = authContext.principal?.toString();
 
-        if (authContext.isAuthenticated && hex !== undefined) {
-            let token = await claimRandomToken();
+        // if (authContext.isAuthenticated && hex !== undefined) {
+        //     let token = await claimRandomToken();
 
-            if (userTokens === null) {
-                setUserTokens([token]);
-            } else {
-                setUserTokens([...userTokens, token]);
-            }
-        }
+        //     if (userTokens === null) {
+        //         setUserTokens([token]);
+        //     } else {
+        //         setUserTokens([...userTokens, token]);
+        //     }
+        // }
     }
+
+
+    useEffect(() => {
+        getRemainingTokens();
+        // loadUserTokens();
+    }, [authContext.icpunk]);
 
     return {
         remainingTokens,
         userTokens,
         displayToken,
-        getRemainingTokens,
-        claimToken
+        // getRemainingTokens,
+
+        claimToken,
     };
 }
 

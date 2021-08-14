@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# dfx start --no-artificial-delay --background --clean 
+dfx start --no-artificial-delay --background --clean 
 PUBLIC_KEY="principal \"$( \
     dfx identity get-principal
 )\""
@@ -14,8 +14,8 @@ dfx build icpunks_storage
 dfx build icpunks_assets
 
 eval dfx canister --no-wallet install icpunks --argument="'(\"ICPunks\", \"TT\", 10000, $PUBLIC_KEY)'" -m reinstall
-eval dfx canister --no-wallet install icpunks_storage --argument="'($PUBLIC_KEY)'"
-eval dfx canister --no-wallet install icpunks_assets
+eval dfx canister --no-wallet install icpunks_storage --argument="'($PUBLIC_KEY)'" -m reinstall
+eval dfx canister --no-wallet install icpunks_assets -m reinstall
 
 ICPUNKSID=$(dfx canister --no-wallet id icpunks)
 STOREID=$(dfx canister --no-wallet id icpunks_storage)

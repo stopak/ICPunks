@@ -28,6 +28,21 @@ h2 {
     background-color: $main-color;
 }
 
+.wallets{
+    img {
+        max-height: 100px;
+    }
+ h3 {
+     margin-top: 20px;
+    font-family: "Arial";
+    font-weight: bold;
+}
+    .col-sm-6:hover {
+        background-color: $gray-color;
+        border-radius: 10px;
+    }
+}
+
 .dark-background {
     background-color: $main-dark;
 }
@@ -319,6 +334,14 @@ input.button {
         display: initial;
     }
 }
+
+.logo {
+    width: 300px;
+    @media (min-width: 600px) {
+        width: 542px;
+    }
+}
+
 
 // @media (min-width: 1040px) {
 

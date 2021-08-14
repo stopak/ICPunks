@@ -1,23 +1,24 @@
-import { useAuth } from "src/utils";
+import { useAuth } from "src/utils/auth";
 
 export default function Account() {
     const authContext = useAuth();
 
-    async function signIn() {
-        authContext.logIn();
-    }
+    const handleShow = () => authContext.showModal(true);
 
-    if (authContext.isAuthenticated) {
-        let principal = authContext.identity?.getPrincipal();
-        let hex = principal?.toString();
+    if (authContext.principal) {
+        // let principal = authContext.identity?.getPrincipal();
+        let hex = authContext.principal?.toString();
 
         return (
             <div>
                 <span>Welcome {hex?.substring(0, 5)}...{hex?.substring(60)}</span>
-        {/* <Button variant="outline-success" onClick={signOut}>Logout</Button> */}
-        </div>
+            </div>
         );
     }
 
-    return (<div><img src="/img/wallet.png" alt="wallet" onClick={signIn}/></div>);
+    return (
+            <div><img src="/img/wallet.png" alt="wallet" onClick={handleShow} style={{ cursor: 'pointer' }} /></div>
+    );
+
+
 }

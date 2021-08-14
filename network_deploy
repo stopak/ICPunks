@@ -1,3 +1,6 @@
+Initial deploy:
+
+
 515724c3f0976accf3ad9cf4616f7b8fc734749d04847eec21ee3ccb8e64f0a0
 dbe2572f55ed66fb9cae976adf975e9c4d0f09683ebc26a2ea8e33138c3cb653
 
@@ -5,6 +8,12 @@ dkzjk-sxlxb-cdh5x-rtexw-7y54l-yfwbq-rhayo-ufw34-lugle-j4s23-4ae
 
 dfx ledger --network ic create-canister dkzjk-sxlxb-cdh5x-rtexw-7y54l-yfwbq-rhayo-ufw34-lugle-j4s23-4ae --amount .25
 
-ghcli-liaaa-aaaah-qaj7a-cai
+Wallet address: ghcli-liaaa-aaaah-qaj7a-cai.raw.ic0.app
 
 dfx identity --network ic deploy-wallet read
+
+
+Update:
+
+dfx build --network ic icpunks_assets
+dfx canister --network ic install icpunks_assets -m reinstall

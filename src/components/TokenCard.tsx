@@ -1,7 +1,7 @@
 import { Principal } from "@dfinity/agent";
 import { useEffect, useState } from "react";
 import { Card, Button } from "react-bootstrap";
-import { useAuth } from "src/utils";
+import { useAuth } from "src/utils/auth";
 
 
 export default function TokenCard({ value, index }: { value: ([] | Principal), index: number }) {
@@ -19,7 +19,7 @@ export default function TokenCard({ value, index }: { value: ([] | Principal), i
             setOwnerText("Already Claimed, sorry");
             setClaimText(<></>);
         }
-        if (authContext.isAuthenticated && authContext.identity?.getPrincipal().toString() === value.toString()) {
+        if (authContext.principal?.toString() === value.toString()) {
             setOwnerText("Your token!");
             setClaimText(<></>);
         }

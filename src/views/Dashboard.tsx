@@ -1,22 +1,16 @@
-import { Container, Col, Row, Card } from "react-bootstrap";
-import ClaimButton from "src/components/ClaimButton";
+import { Container, Col, Row } from "react-bootstrap";
 import Countdown from "src/components/Countdown";
 import Description from "src/components/Description";
-import OwnedTokens from "src/components/OwnedTokens";
-import Token from "src/components/Token";
-import { useAuth } from "src/utils";
+import { useAuth } from "src/utils/auth";
 
 export default function Dashboard() {
     const authContext = useAuth();
 
     async function signIn() {
-        authContext.logIn();
+        authContext.showModal(true);
     }
 
-    let principal = authContext.identity?.getPrincipal();
-    let hex = principal?.toString();
-
-    let waitStyle = authContext.isAuthenticated && hex !== undefined ? "text-center " : "text-center inactive";
+    let waitStyle = authContext.principal !== undefined ? "text-center " : "text-center inactive";
 
     return (
         <>
@@ -36,7 +30,7 @@ export default function Dashboard() {
                         </Col>
                     </Row>
                       <Row className="steps">
-                        <Col className="text-center" onClick={signIn}>
+                        <Col className="text-center" onClick={signIn} style={{cursor:'pointer'}}>
                             <div className="image">
                                 <img src="/img/wallet.svg" alt="wallet"/>
                             </div>
@@ -50,7 +44,7 @@ export default function Dashboard() {
                                 <img src="/img/draw.svg" alt="wallet"/>
                             </div>
                             <div className="step">STEP 2</div>
-                            <div className="name">Wait till September 1 20:00 UTC</div>
+                            <div className="name">Wait untill Sept 1 20:00 UTC</div>
                             <div className="desc">Claiming will be enabled at that time</div>
                             <div className="action">Wait</div>
                         </Col>

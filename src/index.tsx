@@ -1,10 +1,10 @@
-import React from "react";
 import ReactDOM from "react-dom";
-import { updateHead, ProvideAuth } from "./utils";
 import { AppRouter } from "./AppRouter";
 import Header from "./components/Header";
 import "./styles.scss";
 import { ProvideState } from "./utils/state";
+import SelectWallet from "./components/SelectWallet";
+import { ProvideAuth } from "./utils/auth";
 
 function ICPunksApp() {
   return (
@@ -12,12 +12,10 @@ function ICPunksApp() {
       <ProvideState>
         <Header />
         <AppRouter />
+        <SelectWallet />
       </ProvideState>
     </ProvideAuth>
   );
 }
-
-// Required for website to behave like a phone app on mobile devices
-updateHead(document);
 
 ReactDOM.render(<ICPunksApp />, document.getElementById("app"));

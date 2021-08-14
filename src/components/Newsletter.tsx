@@ -5,7 +5,12 @@ export default function Newsletter() {
     const [email, setEmail] = useState("");
     const [isSent, setSent] = useState(false);
 
+    const [isWorking, setWorking] = useState(false);
+
     function signIn() {
+        if (isWorking) return;
+        setWorking(true);
+
         var data = new FormData();
         data.append('email', email);
         data.append('l', "9d88fb56-31df-41ec-b448-2c693a465cca");
@@ -16,6 +21,7 @@ export default function Newsletter() {
             // do something to response
             console.log(this.responseText);
             setSent(true);
+            setWorking(false);
         };
         xhr.send(data);
     }
@@ -39,7 +45,7 @@ export default function Newsletter() {
                         <div className="button-wrapper input-wrapper gray-background">
                             <input value={email} onChange={updateEmail} type="text" className="button white-background" name="email" placeholder="E-mail" />
                         </div> :
-                        <h2>Thank you for signing up to newsletter!</h2> }
+                        <h2>Thank you for signing up!</h2> }
                     </div>
                     <div>
                         <div className="button-wrapper sdark-background small">
