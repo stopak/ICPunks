@@ -59,7 +59,7 @@ export default function ClaimButton() {
         // );
     } 
     return (
-        <div className="button-wrapper sdark-background mx-3 w-100">
+        <div className="button-wrapper sdark-background mx-3 w-100" style={{ cursor: 'pointer' }}>
             <div className="button sec-background" onClick={handleShow}>
                 <p>Connect your wallet</p>
             </div>

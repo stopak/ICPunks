@@ -29,4 +29,23 @@ module {
         tokenId: Nat;
         timestamp: Time.Time;
     };
+
+    public type Property = {
+        name: Text;
+        value: Text;
+    };
+
+    public type PropertyDesc = {
+        name: Text;
+        values: [Text];
+    };
+
+    public type TokenDesc = {
+        id: Nat;
+        url: Text;
+        name: Text;
+        desc: Text;
+        owner: Principal;
+        properties: [Property]
+    };
 };    

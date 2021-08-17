@@ -4,6 +4,12 @@
       "main": "service/icpunks.mo",
       "type": "motoko"
     },
+    "icpunks_rust": {
+      "build": "cargo build --target wasm32-unknown-unknown --package icpunks --release",
+      "candid": "service/icpunks/src/icpunks.did",
+      "wasm": "service/icpunks/target/wasm32-unknown-unknown/release/internet_identity.wasm",
+      "type": "custom"
+    },
     "icpunks_storage": {
       "main": "service/storage.mo",
       "type": "motoko"

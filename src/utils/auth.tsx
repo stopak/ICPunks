@@ -22,7 +22,7 @@ export interface AuthContext {
   useInternetIdentity: () => void;
 
   setPrincipal: (principal: Principal | undefined) => void;
-  setAgent: (agent: HttpAgent) => void;
+  setAgent: (agent: HttpAgent | undefined) => void;
 }
 
 // Provider hook that creates auth object and handles state
@@ -37,13 +37,13 @@ export function useProvideAuth(): AuthContext {
   const [display, setDisplay] = useState(false);
 
   const usePlug = function () {
-    const wlt = plugWallet(get());
+    const wlt = plugWallet();
     setWallet(wlt);
     setDisplay(false);
   }
 
   const useInternetIdentity = function () {
-    const wlt = internetIdentity(get());
+    const wlt = internetIdentity();
     setWallet(wlt);
     setDisplay(false);
   }
@@ -86,9 +86,12 @@ export function useProvideAuth(): AuthContext {
 }
 
 const authContext = createContext<AuthContext>(null!);
+export let auth : AuthContext;
+
+
 
 export function ProvideAuth({ children }) {
-  const auth = useProvideAuth();
+  auth = useProvideAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 }
 

@@ -67,19 +67,19 @@ export default function Countdown() {
                 <Row className="mb-5 text-center">
                     <Col lg="6" md="12">
                         <Row className="counter">
-                            <Col>
+                            <Col xs="3">
                                 <div className="button-wrapper dark-background mx-auto"><div className="button main-background"><p className="timer">{days}</p></div></div>
                                 <p>DAY</p>
                             </Col>
-                            <Col>
+                            <Col xs="3">
                                 <div className="button-wrapper dark-background mx-auto"><div className="button main-background"><p className="timer">{hr}</p></div></div>
                                 <p>HR</p>
                             </Col>
-                            <Col>
+                            <Col xs="3">
                                 <div className="button-wrapper dark-background mx-auto"><div className="button main-background"><p className="timer">{min}</p></div></div>
                                 <p>MIN</p>
                             </Col>
-                            <Col>
+                            <Col xs="3">
                                 <div className="button-wrapper dark-background mx-auto"><div className="button main-background"><p className="timer">{sec}</p></div></div>
                                 <p>SEC</p>
                             </Col>

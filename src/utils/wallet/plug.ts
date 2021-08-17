@@ -1,5 +1,5 @@
 import { HttpAgent } from "@dfinity/agent";
-import { AuthContext } from "../auth";
+import { auth } from "../auth";
 import { getHost } from "../canister/actor";
 import {
   canisterId as ICPunks_canister_id,
@@ -18,7 +18,7 @@ export interface WalletInterface {
   getActor: <Type>(canisterId: string, idl: any) => Promise<Type | undefined>;
 }
 
-export default function plugWallet(context: AuthContext): WalletInterface {
+export default function plugWallet(): WalletInterface {
     let agent: HttpAgent | undefined = undefined;
 
     async function getActor<Type>(canisterId: string, idl: any): Promise<Type | undefined> {
@@ -50,12 +50,13 @@ export default function plugWallet(context: AuthContext): WalletInterface {
       agent = window.ic.plug.agent as HttpAgent;
       const principal = await agent.getPrincipal();
       
-      context.setAgent(agent);
-      context.setPrincipal(principal);
+      auth.setAgent(agent);
+      auth.setPrincipal(principal);
     }
 
     function logOut() {
-
+      auth.setAgent(undefined);
+      auth.setPrincipal(undefined);
     }
 
     return {

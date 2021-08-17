@@ -1,9 +1,20 @@
 #!/bin/bash
 
+dfx stop
+rm -r .dfx/local
+
 dfx start --no-artificial-delay --background --clean 
 PUBLIC_KEY="principal \"$( \
     dfx identity get-principal
 )\""
+
+cd ../internet-identity
+rm -r .dfx/local
+II_ENV=development dfx deploy --no-wallet --argument '(null)'
+
+cp .dfx/local/canister_ids.json ../icpunks/.dfx/local/canister_ids.json
+
+cd ../icpunks
 
 dfx canister --no-wallet create icpunks
 dfx canister --no-wallet create icpunks_storage

@@ -18,6 +18,10 @@ import Float "mo:base/Float";
 actor class ICPunk (_name: Text, _symbol: Text, _totalSupply: Nat, _owner: Principal) {
     type Operation = Types.Operation;
     type OpRecord = Types.OpRecord;
+    type Property = Types.Property;
+    type PropertyDesc = Types.PropertyDesc;
+    type TokenDesc = Types.TokenDesc;
+
     type StorageActor = actor {
         addRecord : (caller: Principal, op: Operation, from: ?Principal, to: ?Principal, tokenId: Nat, timestamp: Time.Time) -> async Nat;
     };
@@ -75,11 +79,6 @@ actor class ICPunk (_name: Text, _symbol: Text, _totalSupply: Nat, _owner: Princ
         return res;
     };
 
-    ///Lists owners of all tokens
-    public query func listTokens() : async [?Principal] {
-        Array.freeze<?Principal>(tokens_);
-    };
-
     ///Returns list of tokens owned by given user
     public query func userTokens(user: Principal): async [Nat] {
         
@@ -114,6 +113,34 @@ actor class ICPunk (_name: Text, _symbol: Text, _totalSupply: Nat, _owner: Princ
         };
     };
 
+    //Returns description of the token
+    public query func dataOf(tokenId: Nat) : async TokenDesc {
+        let properties : [Property] = [];
+
+        let record : TokenDesc = {
+            id = 1;
+            url = "tokens/1.jpg";
+            name = "Super Punk";
+            desc = "";
+            owner = Principal.fromText("aaaaaaa-aaaa");
+            properties = properties;
+        };
+
+        return record;
+    };
+
+    public func list(tokenId: Nat, price: Nat) : async Bool {
+        false;
+    };
+    public func delist(tokenId: Nat) : async Bool {
+        false;
+    };
+
+    public query func getListed(page: Nat) : async [Nat] {
+        let records : [Nat] = [1];
+
+        records;
+    };
 
     ///Returns random number of token that is available for claim
     public func getRandomToken() : async Nat {

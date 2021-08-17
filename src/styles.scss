@@ -18,6 +18,10 @@ h2 {
     font-weight: bold;
 }
 
+.navbar {
+    height: 115px;
+}
+
 .main-color {
     color: $main-color;
 }
@@ -118,24 +122,57 @@ input.button {
     }
 
     .button {
-        height: 106px;
+        height: 76px;
     }
 
     .button-wrapper {
-        height: 112px;
+        height: 82px;
     }
 
     .button,
     .button-wrapper {
-        width: 106px;
+        width: 80px;
+    }
+
+    .col-3 {
+        padding: 0;
     }
 }
 
 .timer {
-    font-size: 56px;
+    font-size: 46px;
     font-weight: bold;
     filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.761));
-    padding-top: 20px;
+    padding-top: 12px;
+}
+
+@media (min-width: 540px) {
+    .counter {
+        p {
+            font-weight: bold;
+            margin-top: .25rem !important;
+        }
+
+        .button {
+            height: 106px;
+        }
+
+        .button-wrapper {
+            height: 112px;
+        }
+
+        .button,
+        .button-wrapper {
+            width: 106px;
+        }
+    }
+
+    .timer {
+        font-size: 56px;
+        font-weight: bold;
+        filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.761));
+        padding-top: 20px;
+    }
 }
 
 .background-radial {
