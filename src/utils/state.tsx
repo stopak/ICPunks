@@ -24,9 +24,9 @@ export function useProvideState(): StateContext {
     const getRemainingTokens = async function (): Promise<void> {
         if (authContext.icpunk === undefined) return;
 
-        var tokens = await authContext.icpunk.remainingTokens();
+        var tokens = await authContext.icpunk.total_supply();
 
-        console.log("Remaining tokens "+tokens);
+        console.log("Total supply: "+tokens);
 
         setRemainingTokens(tokens);
     };

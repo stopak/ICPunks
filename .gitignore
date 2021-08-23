@@ -18,3 +18,7 @@ dist/
 build/
 
 target/
+
+punks/
+
+key.json

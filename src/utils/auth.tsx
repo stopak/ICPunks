@@ -7,7 +7,8 @@ import {
 } from "dfx-generated/icpunks";
 
 import plugWallet, { WalletInterface } from "./wallet/plug";
-import ICPunk from "./canister/icpunks";
+// import ICPunk from "./canister/icpunks";
+import ICPunk from "../../.dfx/local/canisters/icpunks/icpunks";
 import internetIdentity from "./wallet/ii";
 export interface AuthContext {
   isShow: boolean;

@@ -5,9 +5,9 @@
       "type": "motoko"
     },
     "icpunks_rust": {
-      "build": "cargo build --target wasm32-unknown-unknown --package icpunks --release",
-      "candid": "service/icpunks/src/icpunks.did",
-      "wasm": "service/icpunks/target/wasm32-unknown-unknown/release/internet_identity.wasm",
+      "build": "service/icpunks/build.sh",
+      "candid": "service/icpunks/src/icpunks/icpunks.did",
+      "wasm": "service/icpunks/target/wasm32-unknown-unknown/release/icpunks.wasm",
       "type": "custom"
     },
     "icpunks_storage": {
@@ -25,17 +25,6 @@
         "build"
       ],
       "type": "assets"
-    }
-  },
-  "defaults": {
-    "build": {
-      "packtool": "vessel sources",
-      "output": "build"
-    },
-    "start": {
-      "address": "127.0.0.1",
-      "port": 8000,
-      "serve_root": "build"
     }
   },
   "dfx": "0.7.2",

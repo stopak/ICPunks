@@ -7,6 +7,7 @@ import {
 
 export interface PlugWindow extends Window {
   ic: any;
+
 }
 
 declare let window: PlugWindow;
@@ -31,7 +32,11 @@ export default function plugWallet(): WalletInterface {
     }
 
     async function logIn() {
-      if (window.ic === undefined) return
+      if (window.ic === undefined) {
+        window.open('https://plugwallet.ooo/', '_blank')?.focus();
+        
+        return
+      }
 
       const connected = await window.ic.plug.isConnected();
       const host = getHost();

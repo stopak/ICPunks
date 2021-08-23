@@ -8,13 +8,15 @@ PUBLIC_KEY="principal \"$( \
     dfx identity get-principal
 )\""
 
-cd ../internet-identity
-rm -r .dfx/local
-II_ENV=development dfx deploy --no-wallet --argument '(null)'
+# PUBLIC_KEY="principal \"xm4y3-54lfy-pkijk-3gpzg-gsm3l-yr7al-i5ai7-odpf7-l2pmv-222rl-7qe\""
 
-cp .dfx/local/canister_ids.json ../icpunks/.dfx/local/canister_ids.json
+# cd ../internet-identity
+# rm -r .dfx/local
+# II_ENV=development dfx deploy --no-wallet --argument '(null)'
 
-cd ../icpunks
+# cp .dfx/local/canister_ids.json ../icpunks/.dfx/local/canister_ids.json
+
+# cd ../icpunks
 
 dfx canister --no-wallet create icpunks
 dfx canister --no-wallet create icpunks_storage
@@ -28,14 +30,18 @@ eval dfx canister --no-wallet install icpunks --argument="'(\"ICPunks\", \"TT\",
 eval dfx canister --no-wallet install icpunks_storage --argument="'($PUBLIC_KEY)'" -m reinstall
 eval dfx canister --no-wallet install icpunks_assets -m reinstall
 
+# eval dfx canister --no-wallet call icpunks set_owner "'(principal \"xm4y3-54lfy-pkijk-3gpzg-gsm3l-yr7al-i5ai7-odpf7-l2pmv-222rl-7qe\")'"
+
 ICPUNKSID=$(dfx canister --no-wallet id icpunks)
 STOREID=$(dfx canister --no-wallet id icpunks_storage)
 
 ICPUNKSID="principal \"$ICPUNKSID\""
 STOREID="principal \"$STOREID\""
 
-eval dfx canister --no-wallet call icpunks setStorageCanisterId "'(opt $STOREID)'"
+eval dfx canister --no-wallet call icpunks set_storage_canister_id "'(opt $STOREID)'"
 eval dfx canister --no-wallet call icpunks_storage setTokenCanisterId "'($ICPUNKSID)'"
-eval dfx canister --no-wallet call icpunks addGenesisRecord
+eval dfx canister --no-wallet call icpunks add_genesis_record
 
 echo "Preparation complete"
+
+eval dfx canister --no-wallet call icpunks set_owner "'(principal \"xm4y3-54lfy-pkijk-3gpzg-gsm3l-yr7al-i5ai7-odpf7-l2pmv-222rl-7qe\")'"

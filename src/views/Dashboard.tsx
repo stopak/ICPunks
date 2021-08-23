@@ -44,7 +44,7 @@ export default function Dashboard() {
                                 <img src="/img/draw.svg" alt="wallet"/>
                             </div>
                             <div className="step">STEP 2</div>
-                            <div className="name">Wait untill Sept 1 20:00 UTC</div>
+                            <div className="name">Wait until Sept 1 20:00 UTC</div>
                             <div className="desc">Claiming will be enabled at that time</div>
                             <div className="action">Wait</div>
                         </Col>
