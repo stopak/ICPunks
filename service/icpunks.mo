@@ -268,7 +268,7 @@ actor class ICPunk (_name: Text, _symbol: Text, _maxSupply: Nat, _owner: Princip
         };
 
         //Update owner in token array
-        tokens_[tokenId] := Option.make(new_token);
+        tokens_[tokenId-1] := Option.make(new_token);
 
         //Add #transfer record to ledger
         let res = await Option.unwrap(storageCanister_).addRecord(msg.caller, #transfer, Option.make(msg.caller), Option.make(to), tokenId, Time.now());

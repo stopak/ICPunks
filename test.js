@@ -21,11 +21,11 @@ var keyData = fs.readFileSync('key.json', 'utf8');
 var key = Ed25519KeyIdentity.fromJSON(keyData);
 
 //specify localhost endpoint or ic endpoint;
-// const host = "https://boundary.ic0.app/"; //ic
-// var canister_id = "qcg3w-tyaaa-aaaah-qakea-cai";
+const host = "https://boundary.ic0.app/"; //ic
+var canister_id = "qcg3w-tyaaa-aaaah-qakea-cai";
 
-const host = "http://127.0.0.1:8000"; //local
-var canister_id = "rwlgt-iiaaa-aaaaa-aaaaa-cai";
+// const host = "http://127.0.0.1:8000"; //local
+// var canister_id = "rwlgt-iiaaa-aaaaa-aaaaa-cai";
 
 
 const http = new HttpAgent({identity: key, host});
@@ -48,15 +48,28 @@ const actor = Actor.createActor(ICPunks_factory, { agent: http,
 // });
 
 // var targetPrincipal = Principal.fromText("r4rmh-mbkzp-gv2na-yvly3-zcp3r-ocllf-pt3p3-zsri5-6gqvr-stvs2-4ae");
-// var ownerPrincipal = Principal.fromText("xm4y3-54lfy-pkijk-3gpzg-gsm3l-yr7al-i5ai7-odpf7-l2pmv-222rl-7qe");
+var targetPrincipal = Principal.fromText("hes2n-2pjrc-wnm7e-6acff-yy3wo-otw2l-nebk7-go2ky-dmzfo-gva5j-6qe");
+var ownerPrincipal = Principal.fromText("xm4y3-54lfy-pkijk-3gpzg-gsm3l-yr7al-i5ai7-odpf7-l2pmv-222rl-7qe");
 
 // actor.total_supply().then(x => {
 //   console.log(x);
 // });
 
-// actor.user_tokens(ownerPrincipal).then(x=>{
+// actor.user_tokens(targetPrincipal).then(x=>{
 //   console.log(x);
 // });
+
+async function user_tokens() {
+  var ownerTokens = await actor.user_tokens(ownerPrincipal);
+  console.log("Owner: ");
+  console.log(ownerTokens);
+
+  var targetTokens = await actor.user_tokens(targetPrincipal);
+  console.log("Target: ");
+  console.log(targetTokens);
+}
+
+// user_tokens();
 
 // actor.owner_of(1).then(x=>{
 //   console.log(x.toString());
@@ -69,64 +82,90 @@ const actor = Actor.createActor(ICPunks_factory, { agent: http,
 // actor.owner_of(99).then(x=>{
 //   console.log(x.toString());
 // });
-// async function transfer() {
 
-//   var result = await actor.transfer_to(targetPrincipal, 99);
-//   console.log(result);
-// }
+async function get_token(tokenId) {
+  actor.data_of(tokenId).then(x=>{
+    console.log(x[0].owner.toString());
+  });
+}
 
-// transfer();
+async function owner_of(tokenId) {
+  actor.owner_of(tokenId).then(x=>{
+    console.log(x.toString());
+  });
+}
 
 
+async function transfer(tokenId) {
 
-var fileName = "punks/0.jpg";
+  console.log(targetPrincipal.toString());
+  var result = await actor.transfer_to(targetPrincipal, tokenId);
+  console.log(result);
 
-var buffer = fs.readFileSync(fileName);
-var data = [...buffer];
+  await owner_of(tokenId);
+}
+
+// transfer(13);
+// transfer(20);
+// transfer(36);
+
+// owner_of(13);
+// get_token(13);
+
 var contentType = "image/jpg";
 
 var mintRequest = {
   url: "/Token/",
   contentType: contentType,
-  desc: "Super Image",
-  name: "Image",
-  data: data,
+  desc: "Example description of ICPunk",
+  name: "ICPunk #",
+  data: null,
   properties: []
 };
 
-var multiMintRequest = [
-  mintRequest,
-  mintRequest,
-  mintRequest,
-  mintRequest,
-  mintRequest,
-  mintRequest,
-];
+// var multiMintRequest = [
+//   mintRequest,
+//   mintRequest,
+//   mintRequest,
+//   mintRequest,
+//   mintRequest,
+//   mintRequest,
+// ];
 
-async function multiMint() {
-  var hrstart = process.hrtime()
-  
-  for (let i = 1;i<=17;i++) {
-    // mintRequest.url = "/Token/"+i;
-    await actor.multi_mint(multiMintRequest);
-    console.log(i+"/17");
-  }
-
-  var hrend = process.hrtime(hrstart)
-  console.log("Creating 100 punks took : %ds %dms", hrend[0], hrend[1] / 1000000);
-};
-multiMint();
-// async function mint() {
+// async function multiMint() {
 //   var hrstart = process.hrtime()
   
-//   for (let i = 1;i<=100;i++) {
-//     mintRequest.url = "/Token/"+i;
-//     await actor.mint(mintRequest);
-//     console.log(i+"/100");
+//   for (let i = 1;i<=17;i++) {
+//     // mintRequest.url = "/Token/"+i;
+//     await actor.multi_mint(multiMintRequest);
+//     console.log(i+"/17");
 //   }
 
 //   var hrend = process.hrtime(hrstart)
 //   console.log("Creating 100 punks took : %ds %dms", hrend[0], hrend[1] / 1000000);
-// }
+// };
+// multiMint();
+
+async function mint() {
+  var hrstart = process.hrtime()
+  
+  for (let i = 1;i<=52;i++) {
+
+    var fileName = "punks/"+(i-1)+".jpg";
+
+    var buffer = fs.readFileSync(fileName);
+    var data = [...buffer];
+
+    mintRequest.url = "/Token/"+i;
+    mintRequest.data = data;
+    mintRequest.name = "ICPunk #"+i;
+
+    await actor.mint(mintRequest);
+    console.log(i+"/52");
+  }
+
+  var hrend = process.hrtime(hrstart)
+  console.log("Creating 52 punks took : %ds %dms", hrend[0], hrend[1] / 1000000);
+}
 
 // mint();

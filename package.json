@@ -81,5 +81,6 @@
     "src/**/*.{ts,tsx,js,jsx,json,css,scss,md}": [
       "prettier --write"
     ]
-  }
+  },
+  "type": "module"
 }
