@@ -28,6 +28,7 @@ module {
         from: ?Principal;
         to: ?Principal;
         tokenId: Nat;
+        price: ?Nat64;
         timestamp: Time.Time;
     };
 
@@ -47,6 +48,16 @@ module {
         contentType: Text;
     };
 
+    public type TokenStorage = {
+        id: Nat;
+        url: Text;
+        name: Text;
+        desc: Text;
+        var owner: Principal;
+        properties: [Property];
+    };
+
+    //Used for transfering token data
     public type TokenDesc = {
         id: Nat;
         url: Text;
@@ -85,8 +96,15 @@ module {
         from: Principal;
         from_subaccount: ?Nat8;
         memo: Nat64;
-        ammount : ICPTs;
+        amount : ICPTs;
         block_height : Nat64;
+    };
+
+    public type Listing = {
+        owner: Principal;
+        tokenId: Nat;
+        price: Nat64;
+        timestamp: Time.Time;
     };
 
     //

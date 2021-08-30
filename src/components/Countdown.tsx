@@ -15,11 +15,9 @@ export default function Countdown() {
             
         // Get today's date and time
         var now = new Date();
-        var utcNow = Date.UTC(now.getFullYear(),now.getMonth(), now.getDate() , 
-        now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
-        
+
         // Find the distance between now and the count down date
-        var distance = utcDate - utcNow;
+        var distance = utcDate - now;
 
         // Time calculations for days, hours, minutes and seconds
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));

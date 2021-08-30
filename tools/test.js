@@ -3,9 +3,8 @@ import { Ed25519KeyIdentity, DelegationIdentity } from '@dfinity/identity';
 import crypto from 'crypto';
 import fetch from 'node-fetch';
 import {
-    canisterId as ICPunks_canister_id,
     idlFactory as ICPunks_factory
-  } from "./.dfx/local/canisters/icpunks/icpunks.js";
+  } from "../.dfx/local/canisters/icpunks/icpunks.js";
 
 import fs from 'fs';
 import process from 'process';
@@ -69,7 +68,7 @@ async function user_tokens() {
   console.log(targetTokens);
 }
 
-// user_tokens();
+user_tokens();
 
 // actor.owner_of(1).then(x=>{
 //   console.log(x.toString());
@@ -85,7 +84,7 @@ async function user_tokens() {
 
 async function get_token(tokenId) {
   actor.data_of(tokenId).then(x=>{
-    console.log(x[0].owner.toString());
+    console.log(x);
   });
 }
 
@@ -105,12 +104,16 @@ async function transfer(tokenId) {
   await owner_of(tokenId);
 }
 
-// transfer(13);
+// transfer(60);
 // transfer(20);
 // transfer(36);
 
+// transfer(15);
+// transfer(45);
+
 // owner_of(13);
-// get_token(13);
+// get_token(20);
+// get_token(36);
 
 var contentType = "image/jpg";
 
@@ -120,8 +123,24 @@ var mintRequest = {
   desc: "Example description of ICPunk",
   name: "ICPunk #",
   data: null,
-  properties: []
+  properties: [
+    { name: 'Background', value: 'Black'},
+    { name: 'Body', value: 'White Suit'},
+    { name: 'Nose', value: 'None'},
+    { name: 'Mouth', value: 'Purple'},
+    { name: 'Eyes', value: 'None'},
+    { name: 'Head', value: 'Long Yellow Smile'},
+    { name: 'Top', value: 'None'},
+  ]
 };
+
+// "Background": "Black",
+// "Body": "White Suit",
+// "Nose": "None",
+// "Mouth": "Purple",
+// "Eyes": "None",
+// "Head": "Long Yellow Smile",
+// "Top": "None",
 
 // var multiMintRequest = [
 //   mintRequest,
@@ -151,7 +170,7 @@ async function mint() {
   
   for (let i = 1;i<=52;i++) {
 
-    var fileName = "punks/"+(i-1)+".jpg";
+    var fileName = "../test_data/"+(i-1)+".jpg";
 
     var buffer = fs.readFileSync(fileName);
     var data = [...buffer];

@@ -4,11 +4,9 @@
       "main": "service/icpunks.mo",
       "type": "motoko"
     },
-    "icpunks_rust": {
-      "build": "service/icpunks/build.sh",
-      "candid": "service/icpunks/src/icpunks/icpunks.did",
-      "wasm": "service/icpunks/target/wasm32-unknown-unknown/release/icpunks.wasm",
-      "type": "custom"
+    "ledger_proxy": {
+      "main": "service/ledger_proxy.mo",
+      "type": "motoko"
     },
     "icpunks_storage": {
       "main": "service/storage.mo",

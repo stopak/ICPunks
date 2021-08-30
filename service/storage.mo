@@ -49,6 +49,7 @@ shared(msg) actor class Storage(_owner: Principal) {
         from: ?Principal, 
         to: ?Principal, 
         tokenId: Nat,
+        price: ?Nat64,
         timestamp: Time.Time
     ) : async Nat {
         assert(msg.caller == token_canister_id_);
@@ -61,6 +62,7 @@ shared(msg) actor class Storage(_owner: Principal) {
             from = from;
             to = to;
             tokenId = tokenId;
+            price = price;
             timestamp = timestamp;
         };
         ops := Array.thaw(Array.append(Array.freeze(ops), Array.make(o)));

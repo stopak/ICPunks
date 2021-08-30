@@ -16,3 +16,7 @@ dfx canister --network ic install icpunks_assets -m reinstall
 
 dfx build --network ic icpunks
 dfx canister --network ic install icpunks --argument='("ICPunks", "TT", 10000, principal "xm4y3-54lfy-pkijk-3gpzg-gsm3l-yr7al-i5ai7-odpf7-l2pmv-222rl-7qe")' -m reinstall
+
+
+Check cycles:
+dfx canister --network ic call icpunks get_cycles

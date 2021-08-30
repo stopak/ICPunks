@@ -20,5 +20,6 @@ build/
 target/
 
 punks/
+test_data/
 
 key.json
