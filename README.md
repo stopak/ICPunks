@@ -2,20 +2,16 @@
 
 ICPunks is a project to bring an analogue ERC-721 to Dfinity in order to faciliate creation of NFTs. This repository introduces NFT canisters by showing an implementation - ICPunks - a collection of 10,000 Dfinity punks, which will be available for free to claim by community.
 
-In the current version 0.0.1, you’ll be able to compile the local copy of ICPunks together with Dfinity network and frontend running locally. Follow setup instructions below to run it.
+In the current version 0.0.2, you’ll be able to compile the local copy of ICPunks together with Dfinity network and frontend running locally. Follow setup instructions below to run it.
 
 This project is sponsored by the Dfinity Developer Grant Programme. 
 
 ![Screen after successful deployment, v.0.0.1](https://user-images.githubusercontent.com/22591201/122807088-6e8f2100-d2cb-11eb-8518-5eb236d27c83.png)
 
-## ToDo
-
-Ledger Storage
-Accepting Cycles as form of payment for ICPunk
-
-UI
-View of owned ICPunks
-
+ICPunks main token canister was written in Rust, there were several reasons for changing from Motoko to Rust: 
+1. Currently Rust offers more different packages, this enables more functionality. Especially generating account id from principal. 
+2. Most of the code of IC is currently written in rust. 
+3. Checking the ability to make calls between canisters written in different languages.
 ## Installation
 
 ### Prerequisites
@@ -25,6 +21,7 @@ View of owned ICPunks
 - [Yarn](https://nodejs.org)
 - [Python](https://www.python.org)
 - [Vessel@0.6.0](https://github.com/dfinity/vessel/releases/tag/v0.6.0)
+- [Rustup](https://rustup.rs/)
 
 ## Setup
 
@@ -61,6 +58,12 @@ Install all dependencies for UI
 yarn # <- This installs packages from the lockfile for consistency
 ```
 
+Install target wasm32-unknown-unknown for rust
+
+```shell
+rustup target add wasm32-unknown-unknown
+```
+
 Start a local Internet Computer replica.
 
 ```shell
@@ -70,10 +73,10 @@ $ dfx start --clean --background
 Execute the following commands in another terminal tab in the same directory. (If you want to use internet-identity, skip this instruction and go to How to install local identity)
 
 ```shell
-$ dfx deploy
+./scripts/local_deploy.sh
 ```
 
-This will deploy a local canister called `icpunks_ui`. To open the front-end, get the asset canister id by running `dfx canister id icpunks_assets`. Then open your browser, and navigate to `http://<icpunks_assets-canister-id>.localhost:8000`.
+This will deploy a local canister called `icpunks_assets`. To open the front-end, get the asset canister id by running `dfx canister id icpunks_assets`. Then open your browser, and navigate to `http://<icpunks_assets-canister-id>.localhost:8000`.
 
 ## Frontend Development
 
@@ -131,6 +134,36 @@ dfx deploy
 ```
 ![Internet identity on local replica](https://user-images.githubusercontent.com/22591201/122807202-9088a380-d2cb-11eb-81f0-d1f91d2d103e.png)
 
+# Minting and claiming
+In the opposition to usual ERC 721 minting, ICPunks use pre-minted tokens. It is required due to the fact that images and metadata are stored in contract, instead of IPFS. In order to make it possible for people to claim tokens, separate claiming canister was created (creating new canisters is rather cheap, especially in comparison to ETH). It was decided that it is not required to insert all functionality in to one canister, hence we have following canisters:
+
+icpunks - actual tokens, with listing functionality
+icpunks_storage - ledger for icpunks, stores all defined events: mint, transfer, purchase, list, delist
+icpunks_claim - claiming for icpunks, initially all tokens are owned by this canister
+
+# Tools
+All js scripts utilize Ed25519KeyIdentity key stored in file key.json, NEVER share this file with anyone, DO NOT upload this file to github. Those are the keys to your kingdom.
+
+## generate_key.js
+Generates key.json with randomly selected principal. DO NOT SHARE key.json with anyone.
+
+## mint.js
+Used for minting tokens in canister, first 100 tokens are given to specified principal (change it or you will loose your tokens!). In order to make the process faster utilizes multi_mint function (can mint several tokens at once). Due to limitation of 2mb upload it calculates how many tokens at once it can mint. Minting of 10 000 tokens took about 1h 20m.
+
+## test.js
+Used for minting 52 tokens on local replica. Has additional functions for testing output from canister
+
+# Scripts
+
+## local_deploy.sh
+Deploys canisters locally, dfx deploy will not work as there are more steps involved in setting up the canisters:
+1. Token canister requires startup parameters
+2. Adding genesis record to ledger
+3. Pointing token canister to ledger canister (storage)
+4. Pointing storage canister to token canister
+
+## network_deploy.sh
+Similar to local_deploy.sh however deploys to ic network. Use with caution!
 
 # Issues and Remarks
 Here, we gathered various problems we expect to solve while working on the next versions of the ICPunks. Feel free to let us know what you think!

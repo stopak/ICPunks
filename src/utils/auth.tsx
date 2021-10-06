@@ -1,15 +1,20 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { HttpAgent, Principal } from "@dfinity/agent";
+import { HttpAgent } from "@dfinity/agent";
 
-import {
-  canisterId as ICPunks_canister_id,
-  idlFactory as ICPunks_factory
-} from "dfx-generated/icpunks";
+import internetIdentity from "./wallet/ii";
+
+import ICPunk from "./canister/icpunks_type";
+import { idlFactory as icpunks_idl } from "./canister/icpunks";
+
+import Claim from "./canister/icpunks_claim_type";
+import { idlFactory as claim_idl } from "./canister/icpunks_claim";
+
+import { getCanisterIds } from "./canister/principals";
 
 import plugWallet, { WalletInterface } from "./wallet/plug";
-// import ICPunk from "./canister/icpunks";
-import ICPunk from "../../.dfx/local/canisters/icpunks/icpunks";
-import internetIdentity from "./wallet/ii";
+import { Principal } from "@dfinity/principal";
+
+
 export interface AuthContext {
   isShow: boolean;
   showModal: (show: boolean) => void;
@@ -17,13 +22,19 @@ export interface AuthContext {
   wallet?: WalletInterface;
   principal?: Principal;
   agent?: HttpAgent;
+
+  balance: bigint | null;
+
   icpunk?: ICPunk;
+  claim?: Claim;
 
   usePlug: () => void;
   useInternetIdentity: () => void;
 
   setPrincipal: (principal: Principal | undefined) => void;
   setAgent: (agent: HttpAgent | undefined) => void;
+
+  setBalance: (data: bigint | null) => void;
 }
 
 // Provider hook that creates auth object and handles state
@@ -34,8 +45,11 @@ export function useProvideAuth(): AuthContext {
   const [principal, setPrincipal] = useState<Principal | undefined>(undefined);
   const [agent, setAgent] = useState<HttpAgent | undefined>(undefined);
   const [icpunk, setICPunk] = useState<ICPunk | undefined>(undefined);
+  const [claim, setClaim] = useState<Claim | undefined>(undefined);
 
   const [display, setDisplay] = useState(false);
+
+  const [balance, setBalance] = useState<bigint | null>(null);
 
   const usePlug = function () {
     const wlt = plugWallet();
@@ -47,6 +61,8 @@ export function useProvideAuth(): AuthContext {
     const wlt = internetIdentity();
     setWallet(wlt);
     setDisplay(false);
+
+    
   }
 
   //Displays modal to select wallet
@@ -60,8 +76,13 @@ export function useProvideAuth(): AuthContext {
     if (principal === undefined) return;
 
     const fetchData = async () => {
-      const icpunkActor = await wallet.getActor<ICPunk>(ICPunks_canister_id, ICPunks_factory);
+      let principals = getCanisterIds();
+
+      const icpunkActor = await wallet.getActor<ICPunk>(principals.icpunks, icpunks_idl);
       setICPunk(icpunkActor);
+
+      const claimActor = await wallet.getActor<Claim>(principals.claim, claim_idl);
+      setClaim(claimActor);
     }
 
     fetchData();
@@ -74,12 +95,17 @@ export function useProvideAuth(): AuthContext {
       setPrincipal,
       principal: principal,
       setAgent,
+
       agent: agent,
+      balance,
+      
       wallet,
       icpunk,
+      claim,
 
       usePlug,
       useInternetIdentity,
+      setBalance,
     };
   }
 

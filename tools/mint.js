@@ -1,7 +1,9 @@
-import { Actor, HttpAgent } from '@dfinity/agent';
+import { Actor, HttpAgent, Principal } from '@dfinity/agent';
 import { Ed25519KeyIdentity } from '@dfinity/identity';
 import fetch from 'node-fetch';
-import idlImport from "../.dfx/local/canisters/icpunks/icpunks.did.js";
+import {
+    idlFactory
+  } from "./icpunks.js";
 
 import fs from 'fs';
 import process from 'process';
@@ -20,22 +22,24 @@ var keyData = fs.readFileSync('key.json', 'utf8');
 var key = Ed25519KeyIdentity.fromJSON(keyData);
 
 //specify localhost endpoint or ic endpoint;
-// const host = "https://boundary.ic0.app/"; //ic
-// var canister_id = "qcg3w-tyaaa-aaaah-qakea-cai";
+const host = "https://boundary.ic0.app/"; //ic
+var canister_id = "qcg3w-tyaaa-aaaah-qakea-cai";
 
-const host = "http://127.0.0.1:8000"; //local
-var canister_id = "rwlgt-iiaaa-aaaaa-aaaaa-cai";
+//Update this with claim canister principal ID!!!!
+var claimCanister = Principal.fromText("3hdbp-uiaaa-aaaah-qau4q-cai");
 
+//Update this with your principal!!!!
+var ownerPrincipal = Principal.fromText("rncip-xm7tb-lpn3o-svcxh-xlcrb-yoivy-sx5df-5oiqo-ownaw-5t7km-iqe");
 
 const http = new HttpAgent({ identity: key, host });
-http.fetchRootKey();
 
-const actor = Actor.createActor(idlImport, {
+const actor = Actor.createActor(idlFactory, {
   agent: http,
   canisterId: canister_id,
 });
 
-async function make_request(traits) {
+//Prepares mint request using provided data
+function make_request(trait) {
   var [imagePath, contentType] = get_image_path(trait.tokenId);
 
   var buffer = fs.readFileSync(imagePath);
@@ -43,7 +47,7 @@ async function make_request(traits) {
 
   var mintRequest = {
     url: "/Token/" + (trait.tokenId + 1),
-    contentType: contentType,
+    content_type: contentType,
     desc: "",
     name: "ICPunk #" + (trait.tokenId + 1),
     data: data,
@@ -55,49 +59,58 @@ async function make_request(traits) {
       { name: 'Eyes', value: trait.Eyes },
       { name: 'Head', value: trait.Head },
       { name: 'Top', value: trait.Top },
-    ]
+    ],
+    owner: claimCanister
   };
+
+  //Assignes 100 first tokens to the owner, instead of claiming canister
+  if (trait.tokenId <= 100) mintRequest.owner = ownerPrincipal;
 
   return mintRequest;
 }
 
 function get_image_path(token_id) {
-  var path = './punks/CLOWNS/' + token_id;
+  var path = '../punks/CLOWNS/' + token_id;
 
-  if (fs.existsSync(path + '.jpg')) return (path + '.jpg', 'image/jpg');
-  if (fs.existsSync(path + '.png')) return (path + '.png', 'image/png');
+  if (fs.existsSync(path + '.jpg')) return [path + '.jpg', 'image/jpg'];
+  if (fs.existsSync(path + '.png')) return [path + '.png', 'image/png'];
+
+  return [];
 }
 
+//Mints new tokens using multi_mint feature, before sending package of tokens to mint, checks if the request is within max_size limits (currently 2mb of data)
 async function mint_punks() {
   var counter = 0;
+  var total_minted = 0;
 
   var hrstart = process.hrtime()
 
   while (counter < traits.length) {
     var multi_mint = [make_request(traits[counter])];
 
-    var total_size = fs.statSync(get_image_path(counter)[0]);
+    var total_size = fs.statSync(get_image_path(counter)[0]).size;
 
     var next = true;
 
     while (next) {
       //if not the last one
       if (counter < traits.length - 1) {
-        var next_size = fs.statSync(get_image_path(counter + 1)[0]);
-
-        if (total_size + next_size < 2 * 1024 * 1024) {
+        var next_size = fs.statSync(get_image_path(counter + 1)[0]).size;
+        if (total_size + next_size < (2 * 1024 * 1024*0.9)) {
           total_size += next_size;
           multi_mint.push(make_request(traits[counter + 1]))
           counter++;
         } else {
           next = false;
         }
+      } else {
+        next = false;
       }
     }
 
-    console.log('Minting tokens: '+multi_mint.length);
+    console.log('Minting tokens: '+multi_mint.length+' '+total_minted);
     await actor.multi_mint(multi_mint);
-
+    total_minted += multi_mint.length;
 
     counter++;
   }

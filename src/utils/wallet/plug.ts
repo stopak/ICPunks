@@ -1,9 +1,8 @@
 import { HttpAgent } from "@dfinity/agent";
 import { auth } from "../auth";
 import { getHost } from "../canister/actor";
-import {
-  canisterId as ICPunks_canister_id,
-} from "dfx-generated/icpunks";
+
+import { getCanisterIds } from "../canister/principals";
 
 export interface PlugWindow extends Window {
   ic: any;
@@ -13,10 +12,16 @@ export interface PlugWindow extends Window {
 declare let window: PlugWindow;
 
 export interface WalletInterface {
+  name: string,
+
   logIn: () => void;
   logOut: () => void;
 
+  requestTransfer: (data: any) => any;
+
   getActor: <Type>(canisterId: string, idl: any) => Promise<Type | undefined>;
+
+  getBalance: () => any;
 }
 
 export default function plugWallet(): WalletInterface {
@@ -40,7 +45,8 @@ export default function plugWallet(): WalletInterface {
 
       const connected = await window.ic.plug.isConnected();
       const host = getHost();
-      const whitelist = [ICPunks_canister_id];
+      const ids = getCanisterIds();
+      const whitelist = [ids.icpunks, ids.claim];
 
       if (!connected) {
         const result = await window.ic.plug.requestConnect();
@@ -53,6 +59,8 @@ export default function plugWallet(): WalletInterface {
 
       await window.ic.plug.createAgent({ whitelist, host })
       agent = window.ic.plug.agent as HttpAgent;
+      agent.fetchRootKey();
+
       const principal = await agent.getPrincipal();
       
       auth.setAgent(agent);
@@ -64,9 +72,22 @@ export default function plugWallet(): WalletInterface {
       auth.setPrincipal(undefined);
     }
 
+    async function requestTransfer(data: any) : Promise<any> {
+      if (window.ic === undefined) return;
+
+      return await window.ic.plug.requestTransfer(data);
+    }
+
+    async function getBalance() : Promise<any> {
+
+    }
+
     return {
+        name: 'plug',
         logIn,
         logOut,
-        getActor
+        getActor,
+        requestTransfer,
+        getBalance
       };
 }

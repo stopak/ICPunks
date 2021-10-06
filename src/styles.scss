@@ -7,6 +7,9 @@ $sec-dark: rgba(20, 135, 202, 1);
 $gray-color: rgba(241, 241, 241, 1);
 $dgray-color: rgba(35, 35, 35, 1);
 
+$green-color: rgba(0,255,0,1);
+$dgreen-color: rgba(0,128,0,1);
+
 body {
     font-family: Segoe UI;
     font-size: 22px;
@@ -30,6 +33,25 @@ h2 {
     color: white;
     text-align: center;
     background-color: $main-color;
+    height: 67px;
+
+    p {
+        font-weight: bold;
+        font-size: 26px;
+        padding-top: 18px;
+    }
+}
+
+.green-color {
+    color: $green-color;
+}
+
+.green-background {
+    background-color: $green-color;
+}
+
+.dgreen-background {
+    background-color: $dgreen-color;
 }
 
 .wallets{
@@ -49,6 +71,7 @@ h2 {
 
 .dark-background {
     background-color: $main-dark;
+    height: 73px;
 }
 
 .gray-background {
@@ -218,6 +241,34 @@ input.button {
     }
 }
 
+.properties {
+    h3 {
+        font-size: 25px;
+        margin: 30px;
+        font-weight: bold;
+    }
+
+    .prop {
+        background-color:$gray-color;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border-radius: 10px;
+        h6 {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 5px;
+            background-color: rgb(229, 229, 229);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        p {
+            padding-top: 6px;
+            padding-bottom: 15px;
+            font-size: 14px;
+        }
+    }
+}
 
 
 .roadmap {
@@ -480,4 +531,214 @@ input.button {
     }
 
 
-// }
+  // Market Styles
+
+  .filter_container{
+    box-shadow:0px 4px 0px #93B9CE;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    padding-top: 5px;
+    background: linear-gradient(90deg,  #35ACF0 180px, #D0EAF9 0);
+
+}
+
+.filter_title{
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.inctive_tab {
+    color: #2ba7e4 !important;
+    font-weight: bold;
+}
+
+.active_tab {
+    color: #ff0c06 !important;
+    font-weight: bold;
+}
+
+.inline_spans {
+    display: inline-block;
+}
+
+.pill_list {
+    margin-left: 20px;
+    border-radius: 10px;
+    outline: 0 !important;
+}
+
+.active_filter {
+    color: #fff;
+    background-color: #35acf0;
+    border-color: #35acf0;
+}
+
+.inactive_filter {
+    color: #35acf0;
+}
+
+.right_aligned_component {
+    text-align: right;
+    display: block;
+}
+
+.punk_title {
+    background-color: #35ACF0;
+    color: white;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: block;
+    font-weight: bold;
+    div {
+        margin-bottom: -5px;
+    }
+}
+.punk_price {
+    background-color: #F15B25;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.punk_background {
+    box-shadow:0px 4px 0px #93B9CE;
+    border-radius: 10px;
+    background-color: #D0EAF9;
+    width: 210px !important;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.punk_img {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    cursor: pointer;
+    display: block;
+    border-radius: 16px;
+}
+
+.center_container{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center_pagination {
+    margin-top: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.fullscreen-modal{
+    max-width: 1000px;
+    margin-top: 50px;
+}
+
+.background_modal {
+    background-color: #D0EAF9;
+}
+
+.background_modal_content {
+    border-radius: 10px;
+    background-color: rgb(1, 101, 168);
+    color: white;
+}
+
+.text-muted-modal{
+    color: #e2fcff;
+}
+.token-card {
+    margin-top: 50px;
+    background-color: rgb(208, 234, 249);
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 15px;
+}
+
+.card_smaller_text {
+    font-size: small;
+    font-weight: normal;
+}
+
+.created_by_color {
+    background-color: #F6941F;
+    box-shadow:0px 4px 0px #985606;
+    min-width: 150px;
+    margin-bottom: 25px;
+}
+.list-group-item {
+    cursor: pointer;
+}
+
+
+.owner_pill {
+    border-radius: 3px;
+    padding: 5px;
+    color: black;
+    font-size: 16px;
+    text-align: center;
+}
+
+.owned_by_color {
+    background-color: #35ACF0;
+    box-shadow:0px 4px 0px #176694;
+    min-width: 150px;
+}
+
+.attributes_name {
+    font-size: 14px;
+    margin-top: 10px;
+}
+.attributes_color{
+    background-color: white;
+    box-shadow:0px 4px 0px #e7f2f8;
+    width: 140px !important;
+    height: 30px;
+    margin-top: 10px;
+    font-size: 13px;
+    padding-top: 9px;
+}
+
+.detailed_card_label{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.price_color {
+    background-color: #F15A24;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+    box-shadow:2px 4px 2px #c73b08;
+    font-weight: bold;
+}
+
+.right_aligned_div{
+    text-align: right;
+}
+
+.action_pill {
+    margin: 5px;
+    cursor: pointer;
+}
+
+.transaction_table{
+    margin-top: 10px;
+    background-color: white;
+    border-radius: 10px;
+}

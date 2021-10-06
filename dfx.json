@@ -1,15 +1,21 @@
 {
   "canisters": {
     "icpunks": {
-      "main": "service/icpunks.mo",
-      "type": "motoko"
+      "build": "./service/build.sh",
+      "candid": "service/icpunks/icpunks.did",
+      "wasm": "service/target/wasm32-unknown-unknown/release/icpunks.wasm",
+      "type": "custom"
     },
     "ledger_proxy": {
-      "main": "service/ledger_proxy.mo",
+      "main": "service/motoko/ledger_proxy.mo",
       "type": "motoko"
     },
     "icpunks_storage": {
-      "main": "service/storage.mo",
+      "main": "service/motoko/storage.mo",
+      "type": "motoko"
+    },
+    "icpunks_claim": {
+      "main": "service/motoko/claim.mo",
       "type": "motoko"
     },
     "icpunks_assets": {

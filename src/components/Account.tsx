@@ -1,7 +1,9 @@
 import { Image } from "react-bootstrap";
-import { useAuth } from "src/utils/auth";
+import { auth, useAuth } from "src/utils/auth";
+import { useLocalState } from "src/utils/state";
 
 export default function Account() {
+    const localState = useLocalState();
     const authContext = useAuth();
 
     const handleShow = () => authContext.showModal(true);
@@ -21,14 +23,35 @@ export default function Account() {
         });
     }
 
+    function showSendModal() {
+        localState.setShowTransfer(true);
+    }
+
     if (authContext.principal) {
         // let principal = authContext.identity?.getPrincipal();
         let hex = authContext.principal?.toString();
 
+        let icp = <></>;
+
+
+        if (authContext.wallet !== undefined && authContext.wallet.name === 'ii' && authContext.balance !== null && authContext.balance > BigInt(0)) {
+            let balance = Number(authContext.balance)/Math.pow(10, 8);
+            icp = <>
+                <span className="owner_pill price_color inline_spans action_pill" onClick={showSendModal}>
+                    Your ICP: {balance}
+                </span>
+            </>
+        }
+
         return (
+        <>
             <div>
                 <span>Welcome: {hex?.substring(0, 5)}...{hex?.substring(60)} <Image src="/img/copy.svg" style={{width: '24px', marginLeft: '15px', cursor: 'pointer'}} onClick={copyAddress} /></span>
+            
             </div>
+            {icp}
+
+            </>
         );
     }
 
