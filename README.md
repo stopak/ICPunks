@@ -6,7 +6,7 @@ In the current version 0.0.2, you’ll be able to compile the local copy of ICPu
 
 This project is sponsored by the Dfinity Developer Grant Programme. 
 
-![Screen after successful deployment, v.0.0.1](https://user-images.githubusercontent.com/22591201/122807088-6e8f2100-d2cb-11eb-8518-5eb236d27c83.png)
+<img width="1101" alt="punks" src="https://user-images.githubusercontent.com/22591201/136170621-716da4dd-66dc-42ab-81d8-1dd911569410.png">
 
 ICPunks main token canister was written in Rust, there were several reasons for changing from Motoko to Rust: 
 1. Currently Rust offers more different packages, this enables more functionality. Especially generating account id from principal. 
