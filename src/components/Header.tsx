@@ -1,18 +1,24 @@
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Container, Image } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import Account from "./Account";
 
 export default function Header() {
+    const history = useHistory();
+
+    function navMain() {
+        history.push('/');
+    }
+
     return (
-        <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="#home">ICPunks</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
-                    <Nav.Link href="/">Punks</Nav.Link>
-                    <Nav.Link href="/about">About</Nav.Link>
-                </Nav>
-                <Account/>
-            </Navbar.Collapse>
-        </Navbar>
+        <div className="box-shadow">
+            <Container>
+                <Navbar bg="white">
+                    <Navbar.Brand onClick={navMain}><Image src="/img/logo_short.png" width="120" /></Navbar.Brand>
+                    <div className="ml-auto">
+                        <Account />
+                    </div>
+                </Navbar>
+            </Container>
+        </div>
     );
 }

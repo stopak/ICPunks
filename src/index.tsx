@@ -1,20 +1,27 @@
-import React from "react";
 import ReactDOM from "react-dom";
-import { updateHead, ProvideAuth } from "./utils";
 import { AppRouter } from "./AppRouter";
-import Header from "./components/Header";
-// import "./styles.scss";
+import "./styles.scss";
+import { ProvideState } from "./utils/state";
+import SelectWallet from "./components/SelectWallet";
+import { ProvideAuth } from "./utils/auth";
+import SendToken from "./components/SendToken";
+import ListToken from "./components/ListToken";
+import PurchaseToken from "./components/PurchaseToken";
+import SendIcp from "./components/SendIcp";
 
 function ICPunksApp() {
   return (
     <ProvideAuth>
-      <Header />
-      <AppRouter />
+      <ProvideState>
+        <AppRouter />
+        <SelectWallet />
+        <SendToken />
+        <ListToken />
+        <PurchaseToken />
+        <SendIcp />
+      </ProvideState>
     </ProvideAuth>
   );
 }
-
-// Required for website to behave like a phone app on mobile devices
-updateHead(document);
 
 ReactDOM.render(<ICPunksApp />, document.getElementById("app"));

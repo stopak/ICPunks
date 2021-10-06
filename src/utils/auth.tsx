@@ -1,170 +1,124 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { authClient as authenticationClient } from "./authClient";
-import {
-  // getUserFromCanister,
-  // getUserFromStorage,
-  KEY_LOCALSTORAGE_USER,
-} from "./index";
+import { createContext, useContext, useEffect, useState } from "react";
+import { HttpAgent } from "@dfinity/agent";
 
-import { actorController } from "./canister/actor";
-import { Identity } from "@dfinity/agent";
-// import { ProfileInfoPlus } from "./canister/typings";
+import internetIdentity from "./wallet/ii";
+
+import ICPunk from "./canister/icpunks_type";
+import { idlFactory as icpunks_idl } from "./canister/icpunks";
+
+import Claim from "./canister/icpunks_claim_type";
+import { idlFactory as claim_idl } from "./canister/icpunks_claim";
+
+import { getCanisterIds } from "./canister/principals";
+
+import plugWallet, { WalletInterface } from "./wallet/plug";
+import { Principal } from "@dfinity/principal";
+
 
 export interface AuthContext {
-  isAuthenticated: boolean;
-  isAuthReady: boolean;
-  // hasCanCanAccount: boolean;
-  identity?: Identity;
-  logIn: () => void;
-  logOut: () => void;
-  // user: ProfileInfoPlus | undefined;
-  // setUser: (p: ProfileInfoPlus | undefined) => void;
+  isShow: boolean;
+  showModal: (show: boolean) => void;
+
+  wallet?: WalletInterface;
+  principal?: Principal;
+  agent?: HttpAgent;
+
+  balance: bigint | null;
+
+  icpunk?: ICPunk;
+  claim?: Claim;
+
+  usePlug: () => void;
+  useInternetIdentity: () => void;
+
+  setPrincipal: (principal: Principal | undefined) => void;
+  setAgent: (agent: HttpAgent | undefined) => void;
+
+  setBalance: (data: bigint | null) => void;
 }
 
 // Provider hook that creates auth object and handles state
-export function useProvideAuth(authClient): AuthContext {
-  // const [user, setUser] = useState<ProfileInfoPlus | undefined>();
-  const [isAuthenticatedLocal, setIsAuthenticatedLocal] = useState<boolean>(
-    false
-  );
-  const [_identity, _setIdentity] = useState<Identity | undefined>();
-  const [isAuthClientReady, setAuthClientReady] = useState(false);
-  // const [urlWithSearch] = useState<string>(globalThis.location.search);
+export function useProvideAuth(): AuthContext {
+  const [wallet, setWallet] = useState<WalletInterface | undefined>();
 
-  // Creating the auth client is async and no auth related checks can happen
-  // until it's ready so we set a state variable to keep track of it
-  if (!authClient.ready) {
-    authClient.create().then(() => setAuthClientReady(true));
+
+  const [principal, setPrincipal] = useState<Principal | undefined>(undefined);
+  const [agent, setAgent] = useState<HttpAgent | undefined>(undefined);
+  const [icpunk, setICPunk] = useState<ICPunk | undefined>(undefined);
+  const [claim, setClaim] = useState<Claim | undefined>(undefined);
+
+  const [display, setDisplay] = useState(false);
+
+  const [balance, setBalance] = useState<bigint | null>(null);
+
+  const usePlug = function () {
+    const wlt = plugWallet();
+    setWallet(wlt);
+    setDisplay(false);
   }
 
-  // // Use the user from local storage if it is set so the flow doesn't have to
-  // // make an async query.
-  // const setUserFromLocalStorage = () => {
-  //   const lsUser = getUserFromStorage(localStorage, KEY_LOCALSTORAGE_USER);
-  //   if (lsUser) {
-  //     setUser(lsUser);
-  //     setIsAuthenticatedLocal(true);
-  //     // Check to make sure your local storage user exists on the backend, and
-  //     // log out if it doesn't (this is when you have your user stored in local
-  //     // storage but the user was cleared from the backend)
-  //     getUserFromCanister(lsUser.userName).then((user_) => !user_ && logOut());
-  //     return () => void 0;
-  //   }
-  // };
+  const useInternetIdentity = function () {
+    const wlt = internetIdentity();
+    setWallet(wlt);
+    setDisplay(false);
 
-  // Once the auth client is initialized, get the identity and check that they
-  // are authenticated, then set them to be fully logged in.
-  useEffect(() => {
-    if (!authClient.ready) return;
-    Promise.all([authClient.getIdentity(), authClient.isAuthenticated()]).then(
-      ([identity, isAuthenticated]) => {
-        setIsAuthenticatedLocal(isAuthenticated || false);
-        _setIdentity(identity as Identity);
-        // if (isAuthenticated) {
-        //   setUserFromLocalStorage();
-        // }
-        setAuthClientReady(true); 
-      }
-    );
-  }, [isAuthClientReady]);
-
-  // // For testing environments only, this bypasses the authentication with an
-  // // identity provider for testing purposes.
-  // const DFX_NETWORK = process.env.DFX_NETWORK || "local";
-  // useEffect(() => {
-  //   if (DFX_NETWORK === "local") {
-  //     const testUserParam = new URLSearchParams(urlWithSearch).get("testUser");
-  //     if (testUserParam) {
-  //       setIsAuthenticatedLocal(true);
-  //       setAuthClientReady(true);
-  //       setUserFromLocalStorage();
-  //       if (!user) {
-  //         getUserFromCanister(testUserParam).then(
-  //           (user_) => !user && user_ && setUser(user_)
-  //         );
-  //       }
-  //     }
-  //   }
-  // }, [urlWithSearch, user]);
-
-  // // When user is set, and is not in local storage yet store the user object
-  // // from the canister in local storag so the user doesn't need to be fetched
-  // // every load. Then insure user is correctly logged in with identity service,
-  // // and set them to not logged in if not.
-  // useEffect(() => {
-  //   if (user && !getUserFromStorage(localStorage, KEY_LOCALSTORAGE_USER)) {
-  //     localStorage.setItem(
-  //       KEY_LOCALSTORAGE_USER,
-  //       JSON.stringify({ ...user, rewards: user.rewards }, (key, value) =>
-  //         typeof value === "bigint" ? value.toString() : value
-  //       )
-  //     );
-  //     if (!authClient.ready) return;
-  //     (async () => {
-  //       const identity = await authClient.getIdentity();
-  //       if (identity && !identity.getPrincipal().isAnonymous()) {
-  //         _setIdentity(identity);
-  //       }
-  //     })();
-  //   }
-  // }, [user]);
-
-  useEffect(() => {
-    if (_identity && !_identity.getPrincipal().isAnonymous()) {
-      // The auth client isn't ready to make requests until it's completed the
-      // async authenticate actor method.
-      setAuthClientReady(false);
-      actorController.authenticateActor(_identity).then(() => {
-        setAuthClientReady(true);
-      });
-    } else {
-      actorController.unauthenticateActor();
-    }
-  }, [_identity]);
-
-  // Just creating variables here so that it's pretty below
-  const identity = _identity;
-  const isAuthenticated = isAuthenticatedLocal;
-
-  // Login to the identity provider by sending user to Internet Identity
-  // and logging them in.
-  const logIn = async function (): Promise<void> {
-    if (!authClient) return;
-    await authClient.login();
-    const identity = await authClient.getIdentity();
-    if (identity) {
-      setIsAuthenticatedLocal(true);
-      _setIdentity(identity);
-    } else {
-      console.error("Could not get identity from internet identity");
-    }
-  };
-
-  // Clears the authClient of any cached data, and redirects user to root.
-  function logOut() {
-    // setUser(undefined);
-    setIsAuthenticatedLocal(false);
-    localStorage.removeItem(KEY_LOCALSTORAGE_USER);
-    if (!authClient.ready) return;
-    authClient.logout();
+    
   }
 
-  return {
-    isAuthenticated,
-    isAuthReady: isAuthClientReady,
-    // hasCanCanAccount: user !== undefined,
-    logIn,
-    logOut,
-    // user,
-    identity,
-    // setUser,
-  };
+  //Displays modal to select wallet
+  const showModal = function (show: boolean) {
+    setDisplay(show);
+  }
+  
+  //Generate actors when principal is ready
+  useEffect(() => {
+    if (wallet === undefined) return;
+    if (principal === undefined) return;
+
+    const fetchData = async () => {
+      let principals = getCanisterIds();
+
+      const icpunkActor = await wallet.getActor<ICPunk>(principals.icpunks, icpunks_idl);
+      setICPunk(icpunkActor);
+
+      const claimActor = await wallet.getActor<Claim>(principals.claim, claim_idl);
+      setClaim(claimActor);
+    }
+
+    fetchData();
+  }, [principal])
+
+  function get() {
+    return {
+      showModal,
+      isShow: display,
+      setPrincipal,
+      principal: principal,
+      setAgent,
+
+      agent: agent,
+      balance,
+      
+      wallet,
+      icpunk,
+      claim,
+
+      usePlug,
+      useInternetIdentity,
+      setBalance,
+    };
+  }
+
+  return get();
 }
 
 const authContext = createContext<AuthContext>(null!);
+export let auth : AuthContext;
+
+
 
 export function ProvideAuth({ children }) {
-  const auth = useProvideAuth(authenticationClient);
+  auth = useProvideAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 }
 

@@ -1,0 +1,25 @@
+[package]
+name = "icpunks"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+common = { path = "../common" }
+ic-cdk = "0.3"
+ic-cdk-macros = "0.3"
+ic-types = "0.1.1"
+serde = "1"
+serde_bytes = "0.11"
+serde_cbor = "0.11"
+serde_with = "1.6.2"
+sha2 = "0.9.1"
+hex = {version = "0.4.2", features = ["serde"] }
+crc32fast = "1.2.0"
+
+[build-dependencies]
+sha2 = "0.9.1"

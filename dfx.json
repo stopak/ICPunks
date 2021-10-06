@@ -1,7 +1,21 @@
 {
   "canisters": {
     "icpunks": {
-      "main": "service/ICPunks.mo",
+      "build": "./service/build.sh",
+      "candid": "service/icpunks/icpunks.did",
+      "wasm": "service/target/wasm32-unknown-unknown/release/icpunks.wasm",
+      "type": "custom"
+    },
+    "ledger_proxy": {
+      "main": "service/motoko/ledger_proxy.mo",
+      "type": "motoko"
+    },
+    "icpunks_storage": {
+      "main": "service/motoko/storage.mo",
+      "type": "motoko"
+    },
+    "icpunks_claim": {
+      "main": "service/motoko/claim.mo",
       "type": "motoko"
     },
     "icpunks_assets": {
@@ -12,25 +26,19 @@
         "entrypoint": "src/index.tsx"
       },
       "source": [
-        "build",
-        "public"
+        "build"
       ],
       "type": "assets"
     }
   },
-  "defaults": {
-    "build": {
-      "packtool": "vessel sources",
-      "output": "build"
-    },
-    "start": {
-      "address": "127.0.0.1",
-      "port": 8000,
-      "serve_root": "build"
-    }
-  },
   "dfx": "0.7.2",
   "networks": {
+    "ic": {
+      "providers": [
+        "https://boundary.ic0.app/"
+      ],
+      "type": "persistent"
+    },
     "local": {
       "bind": "127.0.0.1:8000",
       "type": "ephemeral"

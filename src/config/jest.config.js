@@ -11,7 +11,7 @@ for (const key in aliases) {
 module.exports = {
   moduleNameMapper: moduleMap,
   "roots": [
-    "<rootDir>/src"
+    "<rootDir>/app"
   ],
   "transform": {
     "^.+\\.tsx?$": "ts-jest"

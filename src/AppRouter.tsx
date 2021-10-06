@@ -1,40 +1,29 @@
-import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
-// import { TransitionGroup, CSSTransition } from "react-transition-group";
-// import { SignIn } from "./views/SignIn";
-// import { SignUp } from "./components/SignUp";
-// import { useAuth } from "./utils";
-// import { PrivateRoutes } from "./components/PrivateRoutes";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import ScrollToTop from "./components/ScrollToTop";
+import TokenCard from "./components/TokenCard";
 
-import {Dashboard} from "./views/Dashboard";
-
-// function wrapRouteWithFade(Component) {
-//   return ({ match }) => (
-//     <CSSTransition
-//       in={match != null}
-//       timeout={300}
-//       classNames="page-fade"
-//       unmountOnExit
-//     >
-//       <Component />
-//     </CSSTransition>
-//   );
-// }
+import Dashboard from "./views/Dashboard";
+import Market from "./views/Market";
 
 export function AppRouter() {
-  // const { user, setUser, isAuthenticated, isAuthReady, logOut } = useAuth();
 
-  return (
+  return (<>
     <Router>
-       <Switch>
-         <Route exact path="/">
-           <Dashboard/>
-        </Route>
+      <ScrollToTop />
+      <Header />
+      <Switch>
+        <Route exact path="/" component={Dashboard} />
+        <Route exact path="/market" component={Market} />
+        <Route path="/token/:tokenId" component={TokenCard} />
       </Switch>
     </Router>
+    <Footer/>
+    </>
   );
 }
