@@ -7,15 +7,15 @@ PUBLIC_KEY="principal \"$( \
 
 dfx canister --network ic create icpunks
 dfx canister --network ic create icpunks_storage
-dfx canister --network ic create icpunks_assets
+# dfx canister --network ic create icpunks_assets
 
 dfx build --network ic icpunks
 dfx build --network ic icpunks_storage
-dfx build --network ic icpunks_assets
+# dfx build --network ic icpunks_assets
 
-eval dfx canister --network ic install icpunks --argument="'(\"ICPunks\", \"TT\", 10000, $PUBLIC_KEY)'" -m reinstall
+eval dfx canister --network ic install icpunks --argument="'(\"ICKitties\", \"ICK\", 10000, $PUBLIC_KEY)'" -m reinstall
 eval dfx canister --network ic install icpunks_storage --argument="'($PUBLIC_KEY)'" -m reinstall
-eval dfx canister --network ic install icpunks_assets -m upgrade
+# eval dfx canister --network ic install icpunks_assets -m upgrade
 
 ICPUNKSID=$(dfx canister --network ic id icpunks)
 STOREID=$(dfx canister --network ic id icpunks_storage)

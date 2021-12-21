@@ -23,3 +23,5 @@ punks/
 test_data/
 
 key.json
+
+canister_ids.json

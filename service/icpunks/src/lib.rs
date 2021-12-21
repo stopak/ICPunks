@@ -2,6 +2,8 @@ use ic_cdk::{caller, trap, print};
 use ic_cdk_macros::*;
 use ic_cdk::api;
 use ic_cdk::export::candid::{Principal};
+use ic_cdk::storage;
+
 use serde_bytes::{ByteBuf, Bytes};
 use std::borrow::Cow;
 use std::collections::HashMap;
@@ -40,6 +42,23 @@ fn init(name: String, symbol: String, max_supply: i128, owner: Principal) {
     unsafe {
         STATE = Some(state);
     }
+}
+
+#[pre_upgrade]
+fn pre_upgrade() {
+    let state = get_state();
+
+    storage::stable_save((state, )).expect("failed to save tera state");
+}
+
+#[post_upgrade]
+fn post_upgrade() {
+    // STATE.with(|s| s.clear_all());
+
+    // let (stable_tera_state,): (State,) =
+    //     storage::stable_restore().expect("failed to restore stable tera state");
+
+    // STATE.with(|s| s.replace_all(stable_tera_state));
 }
 
 #[query]
@@ -318,11 +337,7 @@ fn http_request(req: HttpRequest) -> HttpResponse {
 
 
 //Contains whole state of NFT
-static mut STATE: Option<State> = None;
-
-// thread_local! {
-//     //Contains state of token assets
-//     // static ASSETS: RefCell<HashMap<&'static str, (Vec<HeaderField>, &'static [u8])>> = RefCell::new(HashMap::default());
+    static mut STATE: Option<State> = None;
 // }
 
 pub fn get_state() -> &'static mut State {

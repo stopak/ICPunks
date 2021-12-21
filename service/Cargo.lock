@@ -432,6 +432,7 @@ dependencies = [
 name = "icpunks"
 version = "0.1.0"
 dependencies = [
+ "candid",
  "common",
  "crc32fast",
  "hex",

@@ -25,6 +25,7 @@ pub struct Listing {
 #[derive(Copy, Clone, CandidType, Deserialize)]
 pub struct Subaccount(pub [u8; 32]);
 
+#[derive(CandidType, Deserialize)]
 pub struct State {
     pub owner: Principal,
     pub name: String,
@@ -163,9 +164,10 @@ impl State {
 
         token.owner = to;
 
+        self.delist(from, token_id).await;
         self.remove_from(from, token_id);
         self.assign_to(to, token_id);
-    
+
         let _res = self.store_tx(from, Operation::transfer, from, Some(to), token_id, None::<u64>, time() as i128).await;
 
         return Ok(true);
@@ -227,7 +229,9 @@ impl State {
     pub async fn delist(&mut self, from: Principal, token_id: u128) -> Result<bool, &'static str>  {
         if token_id > self.tokens.len() as u128 || token_id == 0  { return Err("Invalid token_id"); }
         let pos = (token_id-1) as usize;
-        let token = self.tokens.get_mut(pos).unwrap();
+        let token_opt = self.tokens.get_mut(pos);
+        if token_opt.is_none() { return Err("Token is not listed") }
+        let token = token_opt.unwrap();
 
         //todo: listing price update
 

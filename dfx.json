@@ -6,32 +6,12 @@
       "wasm": "service/target/wasm32-unknown-unknown/release/icpunks.wasm",
       "type": "custom"
     },
-    "ledger_proxy": {
-      "main": "service/motoko/ledger_proxy.mo",
-      "type": "motoko"
-    },
     "icpunks_storage": {
       "main": "service/motoko/storage.mo",
       "type": "motoko"
-    },
-    "icpunks_claim": {
-      "main": "service/motoko/claim.mo",
-      "type": "motoko"
-    },
-    "icpunks_assets": {
-      "dependencies": [
-        "icpunks"
-      ],
-      "frontend": {
-        "entrypoint": "src/index.tsx"
-      },
-      "source": [
-        "build"
-      ],
-      "type": "assets"
     }
   },
-  "dfx": "0.7.2",
+  "dfx": "0.8.4",
   "networks": {
     "ic": {
       "providers": [
