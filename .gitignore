@@ -19,9 +19,10 @@ build/
 
 target/
 
-punks/
+data/
 test_data/
 
 key.json
 
 canister_ids.json
+tools/

@@ -21,7 +21,7 @@ fn init(name: String, symbol: String, max_supply: i128, owner: Principal) {
 
     let state = State {
         name: name.clone(),
-        description: "ICPunks NFT Collection".to_string(),
+        description: "ICats NFT Collection".to_string(),
         icon_url: "None".to_string(),
         symbol: symbol.clone(),
         max_supply: max_supply as u32,
@@ -48,17 +48,16 @@ fn init(name: String, symbol: String, max_supply: i128, owner: Principal) {
 fn pre_upgrade() {
     let state = get_state();
 
-    storage::stable_save((state, )).expect("failed to save tera state");
+    storage::stable_save((state, )).expect("Failed to save state!");
 }
 
 #[post_upgrade]
 fn post_upgrade() {
-    // STATE.with(|s| s.clear_all());
+    let (new_state,): (State, ) = storage::stable_restore().expect("Failed to restore state!");
 
-    // let (stable_tera_state,): (State,) =
-    //     storage::stable_restore().expect("failed to restore stable tera state");
-
-    // STATE.with(|s| s.replace_all(stable_tera_state));
+    unsafe {
+        STATE = Some(new_state);
+    }
 }
 
 #[query]
@@ -241,12 +240,27 @@ async fn transfer_to(to: Principal, token_id: u128) -> bool {
     let state = get_state();
     //Check if tokenId is valid
 
-    print(caller().to_text());
-
     match state.transfer(caller(), to, token_id).await {
         Ok(_) => return true,
         Err(s) => trap(&s),
     }
+}
+
+#[update]
+async fn multi_transfer_to(data: Vec<(Principal, u128)>) -> Vec<bool> {
+    let state = get_state();
+    //Check if tokenId is valid
+
+    let mut result : Vec<bool> = Vec::with_capacity(data.len());
+
+    for item in data {
+        match state.transfer(caller(), item.0, item.1).await {
+            Ok(id) => result.push(id),
+            Err(_) => {}
+        }        
+    }
+
+    return result;
 }
 
 #[query]

@@ -47,6 +47,12 @@ type MintRequest =
    owner: principal;
  };
 
+  type TransferRequest = 
+  record {
+    to: principal;
+    token_id: nat;
+  };
+
  type TokenDesc = 
  record {
    desc: text;
@@ -83,7 +89,7 @@ type MintRequest =
    Ok: text;
  };
 
-service : (text) -> {
+service : (text, text, nat, principal) -> {
   get_storage_canister: () -> (principal) query;
   get_ledger_canister: () -> (principal) query;
   get_cycles: () -> (nat) query;
@@ -114,6 +120,7 @@ service : (text) -> {
   mint: (MintRequest) -> (nat);
   multi_mint: (vec MintRequest) -> (vec nat);
   transfer_to: (principal, nat) -> (bool);
+  multi_transfer_to: (vec TransferRequest) -> (vec bool);
 
   get_listed_count: () -> (nat) query;
   get_listed: (nat) -> (vec Listing) query;

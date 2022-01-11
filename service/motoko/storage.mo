@@ -13,6 +13,7 @@ import Array "mo:base/Array";
 import Option "mo:base/Option";
 import Time "mo:base/Time";
 import Types "./types";
+import Nat "mo:base/Nat";
 import ExperimentalCycles "mo:base/ExperimentalCycles";
 
 shared(msg) actor class Storage(_owner: Principal) {
@@ -22,10 +23,19 @@ shared(msg) actor class Storage(_owner: Principal) {
     private stable var owner_ : Principal = _owner;
     private stable var token_canister_id_ : Principal = msg.caller;
 
-    private var ops : [var OpRecord] = [var];
+    private stable var ops : [var OpRecord] = [var];
     private var ops_acc = HashMap.HashMap<Principal, [var OpRecord]>(1, Principal.equal, Principal.hash);
+    private var ops_token : [var [var OpRecord]] = Array.init<[var OpRecord]>(10000, [var]);
 
     //todo: missing private var ops_token = HashMap.HashMap<Nat, [var OpRecord]>(1, Nat.equal, Nat.hash);
+
+    system func preupgrade() {
+        // entries := Iter.toArray(map.entries());
+    };
+
+    system func postupgrade() {
+        // entries := [];
+    };
 
     public shared(msg) func setTokenCanisterId(token: Principal) : async Bool {
         assert(msg.caller == owner_);
@@ -91,6 +101,19 @@ shared(msg) actor class Storage(_owner: Principal) {
             }
         }
     };
+
+    // /// Get history by token id.
+    // public query func getHistoryByToken(token: Nat) : async ?[OpRecord] {
+    //     // switch (ops_acc.get(a)) {
+    //     //     case (?op_acc) {
+    //     //         let res = Array.freeze(op_acc);
+    //     //         return ?res;
+    //     //     };
+    //     //     case (_) {
+    //     //         return null;
+    //     //     }
+    //     // }
+    // };
     
     /// Get all update call history.
     public query func allHistory() : async [OpRecord] {
