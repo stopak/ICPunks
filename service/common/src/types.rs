@@ -77,10 +77,10 @@ pub struct TransactionNotification {
     pub amount: ICPTs,
     pub block_height: u64,
     pub from: Principal,
-    pub from_subaccount: Option<u8>,
+    pub from_subaccount: Option<Subaccount>,
     pub memo: u64,
     pub to: Principal,
-    pub to_subaccount: Option<u8>,
+    pub to_subaccount: Option<Subaccount>,
 }
 
 #[derive(Clone, CandidType, Deserialize)]
@@ -88,12 +88,16 @@ pub struct TimeStamp {
     pub timestamp_nanos: u64,
 }
 
+#[derive(Copy, Clone, CandidType, Deserialize)]
+pub struct Subaccount(pub [u8; 32]);
+
 #[derive(Clone, CandidType, Deserialize)]
 pub struct SendArgs {
     pub memo: u64,
     pub amount: ICPTs,
     pub fee: ICPTs,
-    pub from_subaccount: Option<Vec<u8>>,
+    pub from_subaccount: Option<Subaccount>,
     pub to: String,
     pub created_at_time: Option<TimeStamp>,
 }
+

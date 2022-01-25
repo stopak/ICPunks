@@ -33,8 +33,8 @@ fn init(name: String, symbol: String, max_supply: i128, owner: Principal) {
         storage_canister: None,
         ledger_canister: None,
 
-        listed: Vec::with_capacity(10000),
-        tokens: Vec::with_capacity(10000),
+        listed: Vec::with_capacity(max_supply as usize),
+        tokens: Vec::with_capacity(max_supply as usize),
         owners: HashMap::default(),
         assets: HashMap::default()
     };
@@ -58,6 +58,33 @@ fn post_upgrade() {
     unsafe {
         STATE = Some(new_state);
     }
+
+    // let max_supply = 1000;
+    // let owner = Principal::from_text("dkzjk-sxlxb-cdh5x-rtexw-7y54l-yfwbq-rhayo-ufw34-lugle-j4s23-4ae".to_string()).ok().unwrap();
+
+    // let state = State {
+    //     name: "ICTest".to_string(),
+    //     description: "ICTest NFT Collection".to_string(),
+    //     icon_url: "None".to_string(),
+    //     symbol: "ICT".to_string(),
+    //     max_supply: max_supply as u32,
+    //     owner: owner,
+
+    //     creators_fee: 2500,
+    //     creators_address: owner,
+    //     tx_enabled: true,
+    //     storage_canister: None,
+    //     ledger_canister: None,
+
+    //     listed: Vec::with_capacity(max_supply as usize),
+    //     tokens: Vec::with_capacity(max_supply as usize),
+    //     owners: HashMap::default(),
+    //     assets: HashMap::default()
+    // };
+
+    // unsafe {
+    //     STATE = Some(state);
+    // }
 }
 
 #[query]

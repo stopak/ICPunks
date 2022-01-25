@@ -90,8 +90,8 @@ type MintRequest =
  };
 
 service : (text, text, nat, principal) -> {
-  get_storage_canister: () -> (principal) query;
-  get_ledger_canister: () -> (principal) query;
+  get_storage_canister: () -> (opt principal) query;
+  get_ledger_canister: () -> (opt principal) query;
   get_cycles: () -> (nat) query;
 
   tx_enabled: () -> (bool) query;

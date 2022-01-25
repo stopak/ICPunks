@@ -1,4 +1,5 @@
 [workspace]
 members = [
     "icpunks",
+    "ledger_proxy"
 ]

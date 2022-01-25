@@ -9,6 +9,12 @@
     "icpunks_storage": {
       "main": "service/motoko/storage.mo",
       "type": "motoko"
+    },
+    "ledger_proxy": {
+      "build": "./service/build_proxy.sh",
+      "candid": "service/ledger_proxy/proxy.did",
+      "wasm": "service/target/wasm32-unknown-unknown/release/ledger_proxy.wasm",
+      "type": "custom"
     }
   },
   "dfx": "0.8.4",

@@ -63,6 +63,7 @@ pub static SUB_ACCOUNT_ZERO: Subaccount = Subaccount([0; 32]);
 static ACCOUNT_DOMAIN_SEPERATOR: &[u8] = b"\x0Aaccount-id";
 
 impl State {
+    //Creates genesis record in ledger canister
     pub async fn add_genesis_record(&mut self) -> Result<u128, String> {
         let owner = caller();
         
@@ -123,6 +124,7 @@ impl State {
         }
     }
 
+    //Mints token
     pub async fn mint(&mut self, data: MintRequest, caller: Principal) -> Result<u128, String>  {
         if self.tokens.len() as u32 >= self.max_supply { return Err("Max token count reached".to_string()); }
 
@@ -153,6 +155,7 @@ impl State {
         }
     }
 
+    //Transfers token between accounts
     pub async fn transfer(&mut self, from: Principal, to: Principal, token_id: u128) -> Result<bool, String> {
         if token_id > self.tokens.len() as u128 || token_id == 0  { return Err("Invalid token_id".to_string()); }
 
@@ -173,6 +176,7 @@ impl State {
         return Ok(true);
     }
 
+    //Adds token to listing
     pub async fn list(&mut self, from: Principal, token_id: u128, price: u64) -> Result<bool, &'static str> {
         if !self.tx_enabled { return Err("Transactions are not enabled"); }
         if token_id > self.tokens.len() as u128 || token_id == 0  { return Err("Invalid token_id"); }
@@ -226,6 +230,7 @@ impl State {
         return Ok(true);
     }
 
+    //Removes token from listing
     pub async fn delist(&mut self, from: Principal, token_id: u128) -> Result<bool, &'static str>  {
         if token_id > self.tokens.len() as u128 || token_id == 0  { return Err("Invalid token_id"); }
         let pos = (token_id-1) as usize;
@@ -264,9 +269,8 @@ impl State {
 
         return Ok(true) 
     }
-
-
-
+    
+    //Calculates account id from principal and sub_account
     pub fn account_id(&mut self,account: Principal, sub_account: Option<Subaccount>) -> String {
         let mut hash = Sha224::new();
         hash.update(ACCOUNT_DOMAIN_SEPERATOR);
@@ -284,12 +288,14 @@ impl State {
         return hex::encode(vec);
     }
 
+    //Calculates crc32 checksum
     pub fn generate_checksum(&mut self, hash: [u8; 28]) -> [u8; 4] {
         let mut hasher = crc32fast::Hasher::new();
         hasher.update(&hash);
         hasher.finalize().to_be_bytes()
     }
 
+    //Sends ICP to arbitrary principal id
     pub async fn send_icp(&mut self, to: Principal, amount: u64, memo: u64) -> Result<bool, String> {
         let to_account = self.account_id(to, None).clone();
         
@@ -347,6 +353,7 @@ impl State {
         return res;
     }
 
+    //Wrap for purchase, if failed returns funds to original caller 
     pub async fn purchase(&mut self, caller: Principal, args: TransactionNotification)-> Result<&'static str, &'static str> {
         let result = self._purchase(caller, args.clone()).await;
 

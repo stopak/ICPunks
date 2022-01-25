@@ -1,0 +1,35 @@
+type BlockHeight = nat64;
+type ICPTs = record {
+  e8s : nat64;
+};
+type TimeStamp = record {
+  timestamp_nanos: nat64;
+};
+type AccountIdentifier = text;
+type Memo = nat64;
+type SubAccount = vec nat8;
+
+type SendArgs = record {
+  memo: Memo;
+  amount: ICPTs;
+  fee: ICPTs;
+  from_subaccount: opt SubAccount;
+  to: AccountIdentifier;
+  created_at_time: opt TimeStamp;
+};
+type Result = variant {
+  Ok: null;
+  Err: text;
+}
+
+service : () -> {
+  set_ledger_canister: (principal) -> (bool);
+
+  get_blocks: () -> (vec SendArgs);
+
+  notify: (nat64, opt nat8) -> (Result);
+  send_dfx: (SendArgs) -> (nat64);
+
+  count_processed: () -> (nat64);
+  get_processed: () -> (vec nat64);
+}
