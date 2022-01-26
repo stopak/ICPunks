@@ -108,6 +108,7 @@ service : (text, text, nat, principal) -> {
   owner_of: (nat) -> (principal) query;
   user_tokens: (principal) -> (vec nat) query;
   data_of: (nat) -> (TokenDesc) query;
+  tokens: () -> (vec TokenDesc) query;
 
   set_storage_canister: (principal) -> (bool);
   add_genesis_record: () -> (nat);
@@ -124,6 +125,7 @@ service : (text, text, nat, principal) -> {
 
   get_listed_count: () -> (nat) query;
   get_listed: (nat) -> (vec Listing) query;
+  listings: () -> (vec Listing) query;
   list: (nat, nat64) -> (bool);
   delist: (nat) -> (bool);
   transaction_notification: (TransactionNotification) -> (Result);

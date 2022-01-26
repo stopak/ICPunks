@@ -384,6 +384,19 @@ impl State {
         let listing = self.listed.get(listing_pos.unwrap()).unwrap().clone();
         if listing.price > args.amount.e8s { return Err("Sent amount does not satisfy listing price");}
 
+
+        //Remove listed position from listings, it was just purchased
+        self.listed.remove(listing_pos.unwrap());
+
+        //Transfer token to purchaser
+        let pos = (token_id-1) as usize;
+        let token = self.tokens.get_mut(pos).unwrap();
+
+        token.owner = args.from;
+
+        self.remove_from(listing.owner, token_id);
+        self.assign_to(args.from, token_id);
+
         //Calculate fee and amount to send
         let mut fee = (listing.price as u128 * self.creators_fee / 100000) as u64;
         let amount = listing.price - fee;
@@ -391,17 +404,21 @@ impl State {
         //Include doble tx fees one for sending tokens to seller and one for sending tokens to creator
         fee = fee - 10000 - 10000;
 
-        let _token_result = self.send_icp(listing.owner, amount, token_id as u64).await;
-        match _token_result {
-            Ok(_) => {},
-            Err(_) => {
-                return Err("Could not process transaction");
-            }
-        }
+        // match _token_result {
+        //     Ok(_) => {},
+        //     Err(_) => {
+        //         return Err("Could not process transaction");
+        //     }
+        // }
+        
+        //Start await part, canister state can change during awaits
 
-
-        let _fee_result = self.send_icp(self.creators_address, fee, token_id as u64).await;
         let _res = self.store_tx(caller, Operation::purchase, listing.owner, Some(args.from), token_id, Some(listing.price), time() as i128).await;
+
+        //Send ICP to seller
+        let _token_result = self.send_icp(listing.owner, amount, token_id as u64).await;
+        //Send Fee
+        // let _fee_result = self.send_icp(self.creators_address, fee, token_id as u64).await;
 
         //Return surplus amount to sender
         if listing.price < args.amount.e8s {
@@ -411,18 +428,6 @@ impl State {
                 let _fee_result = self.send_icp(args.from, surplus-10000, token_id as u64).await;
             }
         }
-
-        //Remove listed position from listings, it was just purchased
-        self.listed.remove(listing_pos.unwrap());
-
-        //Transfer token to purchaser
-        let pos = (token_id-1) as usize;
-        let token = self.tokens.get_mut(pos).unwrap();
-        
-        token.owner = args.from;
-
-        self.remove_from(listing.owner, token_id);
-        self.assign_to(args.from, token_id);
 
         return Ok("Purchased token");
     }

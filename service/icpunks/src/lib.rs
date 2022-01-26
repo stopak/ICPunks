@@ -58,33 +58,6 @@ fn post_upgrade() {
     unsafe {
         STATE = Some(new_state);
     }
-
-    // let max_supply = 1000;
-    // let owner = Principal::from_text("dkzjk-sxlxb-cdh5x-rtexw-7y54l-yfwbq-rhayo-ufw34-lugle-j4s23-4ae".to_string()).ok().unwrap();
-
-    // let state = State {
-    //     name: "ICTest".to_string(),
-    //     description: "ICTest NFT Collection".to_string(),
-    //     icon_url: "None".to_string(),
-    //     symbol: "ICT".to_string(),
-    //     max_supply: max_supply as u32,
-    //     owner: owner,
-
-    //     creators_fee: 2500,
-    //     creators_address: owner,
-    //     tx_enabled: true,
-    //     storage_canister: None,
-    //     ledger_canister: None,
-
-    //     listed: Vec::with_capacity(max_supply as usize),
-    //     tokens: Vec::with_capacity(max_supply as usize),
-    //     owners: HashMap::default(),
-    //     assets: HashMap::default()
-    // };
-
-    // unsafe {
-    //     STATE = Some(state);
-    // }
 }
 
 #[query]
@@ -182,7 +155,11 @@ fn data_of(token_id: u128) -> Token {
 
     return state.tokens[pos].clone();
 }
-
+#[query]
+fn tokens() -> Vec<Token> {
+    let state = get_state();
+    return state.tokens.clone();
+}
 
 #[update(guard="owner_guard")]
 fn set_owner(owner: Principal) -> bool {
@@ -313,6 +290,13 @@ fn get_listed(page: u128) -> Vec<Listing> {
     return state.listed[start..start+len].to_vec();
 }
 
+//Returns current listing, by default it is in ascending order
+#[query]
+fn listings() -> Vec<Listing> {
+    let state = get_state();
+    return state.listed.clone();
+}
+
 #[update]
 async fn list(token_id: u128, price: u64) -> bool {
     let state = get_state();
@@ -357,12 +341,21 @@ fn http_request(req: HttpRequest) -> HttpResponse {
             let mut headers = headers.clone();
             //We can enable cache, NFT asset will never change
             headers.push(("Cache-Control".to_string(),"public, max-age=604800, immutable".to_string()));
+            headers.push(("Location".to_string(),format!("https://cache.c4ch.art{}", probably_an_asset)));
+
+            let bytes = ByteBuf::new();
 
             HttpResponse {
-                status_code: 200,
+                status_code: 302,
                 headers: headers,
-                body: Cow::Borrowed(Bytes::new(value)),
+                body: Cow::Owned(bytes)
             }
+
+            // HttpResponse {
+            //     status_code: 200,
+            //     headers: headers,
+            //     body: Cow::Borrowed(Bytes::new(value)),
+            // }
         }
         None => HttpResponse {
             status_code: 404,
