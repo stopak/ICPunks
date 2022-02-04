@@ -10,12 +10,15 @@ PUBLIC_KEY="principal \"$( \
 
 dfx canister --no-wallet create icpunks
 dfx canister --no-wallet create icpunks_storage
+dfx canister --no-wallet create icpunks_assets
 
 dfx build icpunks
 dfx build icpunks_storage
+dfx build icpunks_assets
 
 eval dfx canister --no-wallet install icpunks --argument="'(\"ICats\", \"ICA\", 10000, $PUBLIC_KEY)'"
 eval dfx canister --no-wallet install icpunks_storage --argument="'($PUBLIC_KEY)'"
+eval dfx canister --no-wallet install icpunks_assets
 
 ICPUNKSID=$(dfx canister --no-wallet id icpunks)
 STOREID=$(dfx canister --no-wallet id icpunks_storage)
