@@ -16,25 +16,27 @@ function getHttpAgent() {
   if (process.argv.length === 2) {
     const host = "https://boundary.ic0.app/"; //local
     var canister_id = "nvtz2-maaaa-aaaah-qcohq-cai";
+    var storage_id = "pioxs-7iaaa-aaaah-qcoia-cai"
     const http = new HttpAgent({ identity: key, host });
 
     console.log("Run in production!");
 
-    return [http, canister_id];
+    return [http, canister_id, storage_id];
   } else {
     const host = "http://127.0.0.1:8000"; //local
     var canister_id = "ryjl3-tyaaa-aaaaa-aaaba-cai";
+    var storage_id = "pioxs-7iaaa-aaaah-qcoia-cai"
     
     const http = new HttpAgent({ identity: key, host });
     http.fetchRootKey();
 
     console.log("Run in local dev!");
 
-    return [http, canister_id];
+    return [http, canister_id, storage_id];
   }
 }
 
-const [http, canister_id] = getHttpAgent();
+const [http, canister_id, storage_id] = getHttpAgent();
 
 console.log("Loaded principal: " + key.getPrincipal().toString())
 
@@ -45,6 +47,14 @@ const actor = Actor.createActor(idlFactory, {
     agent: http,
     canisterId: canister_id,
   });
+
+import {
+  idlFactory as idlStorageFactory
+} from "../.dfx/ic/canisters/icpunks_storage/icpunks_storage.did.js";
+const stoarge_actor = Actor.createActor(idlStorageFactory, {
+  agent: http,
+  canisterId: storage_id,
+})
 
 async function run() {
   let storage_canister = await actor.get_storage_canister();
@@ -78,8 +88,38 @@ async function run() {
   console.log("Listed count: "+get_listed_count.toString());
 }
 
+// run();
 
-run();
 
+function formatDate(date) {
+  return date.getFullYear()+"-"+
+  (date.getMonth()+1)+"-"+
+  date.getDay()+" "+
+  date.getHours()+":"+
+  date.getMinutes()+":"+
+  date.getSeconds();
+}
+
+async function getHistory(tokenId) {
+  let history = await stoarge_actor.allHistory();
+
+  let filter = history.filter((x) => {
+    return Number(x.tokenId) === tokenId
+  });
+
+  filter.forEach((x) => {
+    x.from = x.from[0].toString();
+    if (x.to.length === 1)
+      x.to = x.to[0].toString();
+
+    let new_date = new Date(Number(x.timestamp)/1000000)
+    // let date = new Date()
+    x.date = formatDate(new_date);
+  })
+
+  console.log(filter);
+}
+
+getHistory(1000);
 
 

@@ -67,8 +67,8 @@ type MintRequest =
  record {
    owner: principal;
    price: nat64;
-   timestamp: Time;
-   tokenId: nat;
+   time: Time;
+   token_id: nat;
  };
 
   type ICPTs = record {e8s: nat64;};

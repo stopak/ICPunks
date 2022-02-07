@@ -55,9 +55,49 @@ fn pre_upgrade() {
 fn post_upgrade() {
     let (new_state,): (State, ) = storage::stable_restore().expect("Failed to restore state!");
 
+    // let res = ic_cdk::api::call::call_raw(
+    //     self.storage_canister.unwrap(),
+    //     "getOwners",
+    //     event_raw.clone(),
+    //     0,
+    // ).await;
+
+    // let max_supply = 1000;
+    // let name = "".to_string();
+    // let symbol = "".to_string();
+    // let owner = Principal::from_text("");
+    // let storage_canister = Some(Principal::from_text(""));
+    // let ledger_canister = Some(Principal::from_text(""));
+
+    // let state = State {
+    //     name: name.clone(),
+    //     description: "ICats NFT Collection".to_string(),
+    //     icon_url: "None".to_string(),
+    //     symbol: symbol.clone(),
+    //     max_supply: max_supply as u32,
+    //     owner: owner,
+
+    //     creators_fee: 2500,
+    //     creators_address: owner,
+    //     tx_enabled: true,
+    //     storage_canister: storage_canister,
+    //     ledger_canister: ledger_canister,
+
+    //     listed: Vec::with_capacity(max_supply as usize),
+    //     tokens: Vec::with_capacity(max_supply as usize),
+    //     owners: HashMap::default(),
+    //     assets: HashMap::default()
+    // };
+
     unsafe {
         STATE = Some(new_state);
     }
+
+    // let (new_state,): (State, ) = storage::stable_restore().expect("Failed to restore state!");
+
+    // unsafe {
+    //     STATE = Some(new_state);
+    // }
 }
 
 #[query]
@@ -341,7 +381,7 @@ fn http_request(req: HttpRequest) -> HttpResponse {
             let mut headers = headers.clone();
             //We can enable cache, NFT asset will never change
             headers.push(("Cache-Control".to_string(),"public, max-age=604800, immutable".to_string()));
-            headers.push(("Location".to_string(),format!("https://cache.c4ch.art{}", probably_an_asset)));
+            headers.push(("Location".to_string(),"https://cache.icpunks.com/ictest/1".to_string()));
 
             let bytes = ByteBuf::new();
 

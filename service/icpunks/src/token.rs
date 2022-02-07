@@ -142,7 +142,8 @@ impl State {
         self.assign_to(data.owner, token_id);
 
         self.assets.insert(data.url, (vec![("Content-Type".to_string(), data.content_type)], data.data));
-
+        
+        // return Ok(self.tokens.len() as u128);
         let res = self.store_tx(caller, Operation::mint, data.owner, None::<Principal>, token_id, None::<u64>, time() as i128).await;
 
         match res {

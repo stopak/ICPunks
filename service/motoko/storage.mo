@@ -20,21 +20,23 @@ shared(msg) actor class Storage(_owner: Principal) {
     type Operation = Types.Operation;
     type OpRecord = Types.OpRecord;
 
+    public type Stats = {
+        // owners: Nat;
+        highestSell: Nat64;
+        volumeTraded: Nat64;
+    };
+
     private stable var owner_ : Principal = _owner;
     private stable var token_canister_id_ : Principal = msg.caller;
-
     private stable var ops : [var OpRecord] = [var];
+    
     private var ops_acc = HashMap.HashMap<Principal, [var OpRecord]>(1, Principal.equal, Principal.hash);
-    private var ops_token : [var [var OpRecord]] = Array.init<[var OpRecord]>(10000, [var]);
-
     //todo: missing private var ops_token = HashMap.HashMap<Nat, [var OpRecord]>(1, Nat.equal, Nat.hash);
 
     system func preupgrade() {
-        // entries := Iter.toArray(map.entries());
     };
 
     system func postupgrade() {
-        // entries := [];
     };
 
     public shared(msg) func setTokenCanisterId(token: Principal) : async Bool {
@@ -84,6 +86,60 @@ shared(msg) actor class Storage(_owner: Principal) {
         return index;
     };
 
+    /// Get Project Stats
+    public query func stats() : async Stats {
+        var highestSell : Nat64 = 0;
+        // var owners: Nat = 0;
+        var volume: Nat64 = 0;
+
+        for (op in ops.vals()) {
+            switch (op.op) {
+                case (#purchase) {
+                    let price = Option.unwrap(op.price);
+                    volume += price;
+                    if (price > highestSell) { highestSell := price }
+                };
+                case (_) {
+
+                };
+            };
+        };
+
+        var stats = {
+            highestSell;
+            volumeTraded = volume;
+        };
+
+        return stats;
+    };
+
+    /// Get Current owners
+    public query func getOwners() : async [Principal] {
+        var tokens : [var Principal] = Array.init(1000, Principal.fromText("dwymk-kn72k-3b7pm-jkqo6-w2b6o-mb4wc-amwya-k2m4s-7vh54-qq5p3-kqe"));
+
+        for (op in ops.vals()) {
+            switch (op.op) {
+                case (#mint) {
+                    tokens[op.tokenId-1] := Option.unwrap(op.from);
+                };
+
+                case (#purchase) {
+                    tokens[op.tokenId-1] := Option.unwrap(op.to);
+                };
+
+                case (#transfer) {
+                    tokens[op.tokenId-1] := Option.unwrap(op.to);
+                };
+
+                case (_) {
+
+                };
+            };
+        };
+
+        return Array.freeze(tokens);
+    };
+
     /// Get History by index.
     public query func getHistoryByIndex(index: Nat) : async OpRecord {
         return ops[index];
@@ -102,19 +158,6 @@ shared(msg) actor class Storage(_owner: Principal) {
         }
     };
 
-    // /// Get history by token id.
-    // public query func getHistoryByToken(token: Nat) : async ?[OpRecord] {
-    //     // switch (ops_acc.get(a)) {
-    //     //     case (?op_acc) {
-    //     //         let res = Array.freeze(op_acc);
-    //     //         return ?res;
-    //     //     };
-    //     //     case (_) {
-    //     //         return null;
-    //     //     }
-    //     // }
-    // };
-    
     /// Get all update call history.
     public query func allHistory() : async [OpRecord] {
         return Array.freeze(ops);

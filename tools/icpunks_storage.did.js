@@ -1,4 +1,13 @@
-export default ({ IDL }) => {
+export const idlFactory = ({ IDL }) => {
+  const Operation__1 = IDL.Variant({
+    'init' : IDL.Null,
+    'list' : IDL.Null,
+    'mint' : IDL.Null,
+    'delist' : IDL.Null,
+    'transfer' : IDL.Null,
+    'purchase' : IDL.Null,
+  });
+  const Time = IDL.Int;
   const Operation = IDL.Variant({
     'init' : IDL.Null,
     'list' : IDL.Null,
@@ -7,9 +16,7 @@ export default ({ IDL }) => {
     'transfer' : IDL.Null,
     'purchase' : IDL.Null,
   });
-  const Operation_2 = Operation;
-  const Time = IDL.Int;
-  const OpRecord_2 = IDL.Record({
+  const OpRecord = IDL.Record({
     'op' : Operation,
     'to' : IDL.Opt(IDL.Principal),
     'tokenId' : IDL.Nat,
@@ -19,12 +26,11 @@ export default ({ IDL }) => {
     'index' : IDL.Nat,
     'price' : IDL.Opt(IDL.Nat64),
   });
-  const OpRecord = OpRecord_2;
   const Storage = IDL.Service({
     'addRecord' : IDL.Func(
         [
           IDL.Principal,
-          Operation_2,
+          Operation__1,
           IDL.Opt(IDL.Principal),
           IDL.Opt(IDL.Principal),
           IDL.Nat,
@@ -42,6 +48,7 @@ export default ({ IDL }) => {
         ['query'],
       ),
     'getHistoryByIndex' : IDL.Func([IDL.Nat], [OpRecord], ['query']),
+    'getOwners' : IDL.Func([], [IDL.Vec(IDL.Principal)], ['query']),
     'owner' : IDL.Func([], [IDL.Principal], ['query']),
     'setTokenCanisterId' : IDL.Func([IDL.Principal], [IDL.Bool], []),
     'tokenCanisterId' : IDL.Func([], [IDL.Principal], ['query']),
